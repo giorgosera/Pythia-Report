@@ -1,55 +1,77 @@
-\chapter{A data mining framework for event detection}
+\chapter{A data mining framework for automatic event detection and summarisation}
 \ifpdf
     \graphicspath{{Chapter2/Chapter2Figs/PNG/}{Chapter2/Chapter2Figs/PDF/}{Chapter2/Chapter2Figs/}}
 \else
     \graphicspath{{Chapter2/Chapter2Figs/EPS/}{Chapter2/Chapter2Figs/}}
 \fi
 
-In this chapter we will explain in detail the methodology we have followed to construct the 
+In this chapter we will define a theoretical framework for construction of a 
 data mining system which can extract events from Twitter data. The system comprises of a number
 of individual components which when combined together construct a complete framework for 
-event extraction. These components are explained in detail in the sections below and a prototypical
-application which uses this framework will be presented in Chapter \ref{chap:Application}.\\
+event extraction. These components are explained in detail in the sections below and in 
+Chapter \ref{chap:Application} we discuss the concrete implementation of this framework as 
+well as the development of a proof-of-concept application using this framework.\\
 The first section of this chapter introduces the motivating work for the implementation of the system
 and we take a closer look at the concepts and key ideas that are necessary to understand the process we employ.
 
-\section{Methodology overview}
+\section{Methodology overview}\label{MethodologyOverview}
 The main idea behind our methodology for event detction is that similar events will be described by tweets having similar
 content. Therefore, the main task in our methodology is to cluster the tweets in different groups. Having done that
 we can then further investigate these clusters and identify which ones are events and also extract useful information from them.
 This procedure is described in detail in the rest of this chapter and Figure 3.1 depicts an overview of the system. 
-Initially, the system receives a stream of tweets from the database and process and transforms them in a format that aids clustering. 
-The next step in the pipeline is the actual clustering of the tweets in order to detect groups of tweets discussing the same topic.
-Finally, the extracted clusters are processed in order to identify the events.
+Initially, historical tweets from a service provider (Twitter API or another provider) should be retrieved and stored in an 
+appropriate format in the database. Subsequently, the system receives a stream of tweets from the database and process and 
+transforms them in a format that is appropriate for clustering. The next step in the pipeline is the actual clustering of the tweets 
+in order to detect groups of tweets discussing the same topic. Then, the extracted clusters are processed in order to identify the events 
+and generate their summaries. Finally, a visual representation of the results should be generated in order to aid understanding of the events.\\
+
+In our discussion in this chapter we will leave out the data retrieval aspect since it is dependent on the actual implementation and it 
+will be described in detail in Chapter \ref{chap:Application}. For now we'll assume that we have a source of tweets,such as the Twitter API which provides 
+us a collection of historical tweets. 
 
 \begin{figure}[!htbp]
   \begin{center}
-    \includegraphics[height=1in, width=6in]{system-overview}
+    \includegraphics[height=3in, width=6in]{system-overview}
     \caption{System overview - The event extraction system comprises of several independent components.}
     \label{SystemOverview}
   \end{center}
 \end{figure}
 
-\section{Data preprocessing}
+\section{Raw data processing}\label{RawDataProcessing}
 Mining and analysing text corpora are two well studied problems but in our case we face a slightly
 different problem. Social media content and especially tweets are very short (140 characters)
 and usually contain slang phrases, abbreviations and irrelevant information. Therefore, is of
 foremost importance to ensure that clever data preprocessing takes place in order to help us in
-the subsequent tasks. Preprocessing is also required to transform the documents (tweets) in a form that
-will allow us to perform clustering on them. Therefore,  we define 'preprocessing' as all tasks which take place before transforming
-the documents into the vector space representation. Figure 3.2 show the sub-components of the preprocessing module.
+the subsequent tasks. 
 
 \begin{figure}[!htbp]
   \begin{center}
-    \includegraphics[height=1.5in, width=6in]{preprocessing}
-    \caption{The preprocessing module - All the steps neccessary to convert raw documents to vector space representation.}
-    \label{PreprocessingOverview}
+    \includegraphics[height=1.5in, width=6in]{raw-data-processing}
+    \caption{The raw data processing module - All the steps neccessary to convert raw documents to a format suitable for storage in a database.}
+    \label{RawDataProcessingOverview}
   \end{center}
 \end{figure} 
 
-\subsection{Background}
+\subsection{Natural language processing}
 
-\subsubsection{Inverted index}
+Natural language processing (NLP) is a field of computer science and linguistics which is concerned with the extraction of information from a human language 
+input. NLP is used extensively throughout this project since we deal with human generated content and we use several of its applications. NLP in the context 
+of raw data processing is used to clean and normalise our initial input which is a tweet containing raw text.\\ 
+Since tweets usually contain URLs and HTML code one of the first priorities is to remove these elements. Then, the following NLP algorithms
+can be used on our data:
+
+\begin{itemize}
+ \item Sentence segmentation and tokenization: Raw text is split into sentences and then each sentence is further subdivided into words using a tokenizer. 
+ \item Stopword removal: Some of the words occuring in the documents are common English words such as 'the', 'and' and 'a'. These words convey almost no information 
+ but most importantly, they can reduce the clustering accuracy. Two documents can be erroneusly considered related if they contain common English words like the ones
+  we have already mentioned. Therefore, it is important to remove these stopwords. Usually, a dictionary of the common English stopwords is used to filter them out.   
+ \item Stemming: This is a mechanism for reducing English words to their stem form. For example, the stem form of the words `connections' and `connected' is `connect'. This    mechanism is particularly useful in the field of information retrieval and indexing. M.F Porter designed the most widely used stemming algorithm in 1980 [Insert ref here]. This algorithm works by applying a set of different rules, which after a number of iteration yield the final resut which is the stem of the word. Porter
+has developed 62 rules which may or may not apply to a given word.
+\end{itemize}\vspace{15pt}
+
+In section \ref{chap:SummaryGen} we explore more applications of NLP and how we can use them to extract automatic summaries, named entities or sentiment from documents.
+
+\subsection{Inverted index}
 An inverted index, also known as an inverted file, is a data structure central to text-based information retrieval. The name is derived from its 
 purpose and design which is to map key-value pairs, where a key is a term in a document and the value is the list of documents that contain this term.
 For example if we have two documents:\\
@@ -79,7 +101,28 @@ can find the words that appear either too often or less frequently and filter th
 to reduce the dimensionality of our dataset by removing unneccesary words. Alternatively, we
 can remove documents/tweets which contain keywords that appear too often or less frequently.
 
-\subsubsection{Vector space representation}
+\section{Clustering}
+
+TODO Avrio: Grapse mia eisagwgi gia to clustering j an theleis grapse ta requirements t clustering..etsi wste na
+sindeseis ta algorithms ..taxa "these are the algos that fulfill our reqs"..vale eikonoues gia oulla
+
+Clustering is the process of grouping a set of data objects into multiple clusters where all the
+objects in a cluster have high similarity but they are very dissimilar to objects in other clusters.
+Dissimilarities and similarities are calculated based on the attribute values of each data object
+and they often involve distance measures. Clustering is an unsupervised learning method since
+the object labels are not known beforehand.
+In our project we are interested in clustering because we would like to cluster tweets which
+are similar in terms of both textual content and social content. Additionally, due to the fact
+that we have to deal with vast amount of data we are interested in scalability and performance.
+
+\subsection{Vector space representation}
+
+Find a suitable place for this paragraph:
+-----------------------------------------
+Preprocessing is also required to transform the documents (tweets) in a form that
+will allow us to perform clustering on them. Therefore,  we define 'preprocessing' as all tasks which take place before transforming
+the documents into the vector space representation. Figure 3.2 show the sub-components of the preprocessing module.
+
 We can represent each document in a dataset by a vector of identifiers. Usually, these identifiers are the distinct words in the document and 
 the resulting vector is called term-frequency vector. If we combine all the vectors for the documents in our dataset we will end up with an 
 \boldmath $m \times n$  \unboldmath  matrix \boldmath $A$ \unboldmath. Each of the $m$ documents in the document collection are assigned a row 
@@ -108,7 +151,7 @@ representation is used in clustering documents.
 \label{termfrequencyTable}
 \end{table}
 
-\subsubsection{Assigning weights to terms with TF-IDF weighting}
+\subsection{Assigning weights to terms with TF-IDF weighting}
 Once a document is transformed in its term-frequency vector we can assign weights to each term in the vector. So far the term-frequency vectors treat 
 all the terms as equal but this may not be the case. For example, a word that appears more frequently than others in a document could be considered as an 
 important word. At the same time words that appear frequently in the corpus, such as 'a', 'the', 'and', are not very useful and their 
@@ -123,16 +166,9 @@ where $tf_{t, d}$ is the importance of term $t$ in document $d$ and $idf_t$ is t
 a sorted list of the most relevant documents. 
 \\
    
-\subsubsection{Feature selection}
+\subsection{Feature selection}
 TODO: Discusss feature selection methods used in our system.
 
-
-
-\section{Document clustering}
-
-
-\subsection{Background}
-Give background information about the task of document clustering and the individual algorithms used.
 
 \subsection{Kmeans algorithm}
 
@@ -142,7 +178,7 @@ Give background information about the task of document clustering and the indivi
 
 \subsection{Online clustering algorithm}
 
-\section{Post-clustering analysis}
+\section{Automatic text summaries}\label{SummaryGen}
 
 \subsection{Background}
 
