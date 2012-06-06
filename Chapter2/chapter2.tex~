@@ -1,0 +1,79 @@
+\chapter{A data mining toolset for event detection and summarisation}
+\ifpdf
+    \graphicspath{{Chapter2/Chapter2Figs/PNG/}{Chapter2/Chapter2Figs/PDF/}{Chapter2/Chapter2Figs/}}
+\else
+    \graphicspath{{Chapter2/Chapter2Figs/EPS/}{Chapter2/Chapter2Figs/}}
+\fi
+
+In this chapter we will explain in detail the methodology we have followed to construct the 
+data mining system which can extract events from Twitter data. The system comprises of a number
+of individual components which when combined together construct a complete framework for 
+event extraction. These components are explained in detail in the sections below and a prototypical
+application which uses this framework will be presented in Chapter \ref{chap:Application}.
+
+\section{Methodology overview}
+
+The main idea behind our methodology for event detction is that similar events will be described by tweets having similar
+content. Therefore, the main task in our methodology is to cluster the tweets in different groups. Having done that
+we can then further investigate these clusters and identify which ones are events and also extract useful information from them.
+This procedure is described in detail in the rest of this chapter and Figure 3.1 depicts an overview of the system. 
+Initially, the system receives a stream of tweets from the database and process them to be transformed in a clustering-friendly format. 
+The next step in the pipeline is the actual clustering of the tweets in order to detect groups of tweets discussing the same topic.
+Finally, the extracted clusters are processed in order to identify the events and extract a textual summary of each one.
+
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=1in, width=6in]{system-overview}
+    \caption{System overview - The event extraction system comprises of several independent components.}
+    \label{SystemOverview}
+  \end{center}
+\end{figure}
+
+\section{Data pre-processing}
+
+\subsection{Background}
+Give background information about the task of data-preprocessing
+
+\subsection{Text processing}
+
+\subsection{Document indexing}
+
+
+\section{Document clustering}
+
+
+\subsection{Background}
+Give background information about the task of document clustering and the individual algorithms used.
+
+\subsection{Kmeans algorithm}
+
+\subsection{DBSACN algorithm}
+
+\subsection{Non-negative matrix factorisation algorithm}
+
+\subsection{Online clustering algorithm}
+
+\section{Post-clustering analysis}
+
+\subsection{Background}
+
+\subsection{Generating automatic document cluster summaries}
+
+\subsection{Detecting sentiment, named entities and locations in documents}
+
+\section{Twitter user classification}
+
+\subsection{Background}
+
+\subsection{Decision trees}
+
+\subsection{Neural networks}
+
+\section{Summary}
+
+% ------------------------------------------------------------------------
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../thesis"
+%%% End: 

@@ -84,15 +84,13 @@
 \include{Abstract/abstract}
 
 \tableofcontents
-\listoffigures
-\printnomenclature  %% Print the nomenclature
-\addcontentsline{toc}{chapter}{Nomenclature}
 
 \mainmatter % book mode only
 \include{Introduction/introduction}
 \include{Chapter1/chapter1}
 \include{Chapter2/chapter2}
 \include{Chapter3/chapter3}
+\include{Chapter4/chapter4}
 \include{Conclusions/conclusions}
 
 \backmatter % book mode only

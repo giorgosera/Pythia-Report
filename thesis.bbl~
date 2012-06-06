@@ -1,0 +1,111 @@
+\begin{thebibliography}{14}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Allan(2002)]{Allan:2002:TDT:772260}
+James Allan, editor.
+\newblock \emph{Topic detection and tracking: event-based information
+  organization}.
+\newblock Kluwer Academic Publishers, Norwell, MA, USA, 2002.
+\newblock ISBN 0-7923-7664-1.
+
+\bibitem[Becker and Gravano(2010)]{Becker_Gravano_2010}
+Hila Becker and Luis Gravano.
+\newblock Selecting quality twitter content for events.
+\newblock \emph{Artificial Intelligence}, pages 442--445, 2010.
+\newblock URL
+  \url{http://www.aaai.org/ocs/index.php/ICWSM/ICWSM11/paper/view/2744}.
+
+\bibitem[Becker and Gravano(2011)]{Becker_Gravano_2011}
+Hila Becker and Luis Gravano.
+\newblock Beyond trending topics : Real-world event identification on twitter.
+\newblock \emph{New York}, pages 438--441, 2011.
+\newblock URL
+  \url{http://www.cs.columbia.edu/~gravano/Papers/2011/icwsm11-a.pdf}.
+
+\bibitem[Becker et~al.()Becker, Naaman, and
+  Gravano]{Becker_eventidentification}
+Hila Becker, Mor Naaman, and Luis Gravano.
+\newblock Event identification in social media.
+
+\bibitem[Chakrabarti and Punera(2011)]{Chakrabarti_Punera_2011}
+Deepayan Chakrabarti and Kunal Punera.
+\newblock Event summarization using tweets.
+\newblock \emph{Diversity}, pages 66--73, 2011.
+\newblock URL
+  \url{http://www.aaai.org/ocs/index.php/ICWSM/ICWSM11/paper/viewPDFInterstiti%
+al/2885/3263}.
+
+\bibitem[Charikar(2002)]{Charikar02similarityestimation}
+Moses~S. Charikar.
+\newblock Similarity estimation techniques from rounding algorithms.
+\newblock In \emph{In Proc. of 34th STOC}, pages 380--388. ACM, 2002.
+
+\bibitem[Con(2012)]{Choudhury}
+\emph{Unfolding the {E}vent {L}andscape on {T}witter: {C}lassification and
+  {E}xploration of {U}ser {C}ategories}, 2012. Conmputer Supported Cooperative
+  Work.
+
+\bibitem[Fazeen et~al.(2011)Fazeen, Dantu, and
+  Guturu]{DBLP:journals/snam/FazeenDG11}
+Mohamed Fazeen, Ram Dantu, and Parthasarathy Guturu.
+\newblock Identification of leaders, lurkers, associates and spammers in a
+  social network: context-dependent and context-independent approaches.
+\newblock \emph{Social Netw. Analys. Mining}, 1\penalty0 (3):\penalty0
+  241--254, 2011.
+
+\bibitem[Lotan(2011)]{Lotan}
+G.~et~al. Lotan.
+\newblock The {R}evolutions {W}ere {T}weeted: {I}nformation {F}lows during the
+  2011 {T}unisian and {E}gyptian {R}evolutions.
+\newblock \emph{International Journal of Communications}, 5:\penalty0
+  1375--1405, 2011.
+
+\bibitem[Petrovic et~al.(2010)Petrovic, Osborne, and
+  Lavrenko]{Petrovic10streamingfirst}
+Sasa Petrovic, Miles Osborne, and Victor Lavrenko.
+\newblock Streaming first story detection with application to twitter.
+\newblock In \emph{IN PROCEEDINGS OF THE 11TH ANNUAL CONFERENCE OF THE NORTH
+  AMERICAN CHAPTER OF THE ASSOCIATION FOR COMPUTATIONAL LINGUISTICS (NAACL HLT
+  2010)}, 2010.
+
+\bibitem[Sakaki et~al.(2010)Sakaki, Okazaki, and
+  Matsuo]{Sakaki:2010:EST:1772690.1772777}
+Takeshi Sakaki, Makoto Okazaki, and Yutaka Matsuo.
+\newblock Earthquake shakes twitter users: real-time event detection by social
+  sensors.
+\newblock In \emph{Proceedings of the 19th international conference on World
+  wide web}, WWW '10, pages 851--860, New York, NY, USA, 2010. ACM.
+\newblock ISBN 978-1-60558-799-8.
+\newblock \doi{http://doi.acm.org/10.1145/1772690.1772777}.
+\newblock URL \url{http://doi.acm.org/10.1145/1772690.1772777}.
+
+\bibitem[Sayyadi et~al.(2009)Sayyadi, Hurst, and
+  Maykov]{conf/icwsm/SayyadiHM09}
+Hassan Sayyadi, Matthew Hurst, and Alexey Maykov.
+\newblock Event detection and tracking in social streams.
+\newblock In Eytan Adar, Matthew Hurst, Tim Finin, Natalie~S. Glance, Nicolas
+  Nicolov, and Belle~L. Tseng, editors, \emph{ICWSM}. The AAAI Press, 2009.
+\newblock ISBN 978-1-57735-421-5.
+\newblock URL
+  \url{http://dblp.uni-trier.de/db/conf/icwsm/icwsm2009.html\#SayyadiHM09}.
+
+\bibitem[Weng and Lee(2011)]{conf/icwsm/WengL11}
+Jianshu Weng and Bu-Sung Lee.
+\newblock Event detection in twitter.
+\newblock In Lada~A. Adamic, Ricardo~A. Baeza-Yates, and Scott Counts, editors,
+  \emph{ICWSM}. The AAAI Press, 2011.
+\newblock URL
+  \url{http://dblp.uni-trier.de/db/conf/icwsm/icwsm2011.html\#WengL11}.
+
+\bibitem[Yang et~al.(1999)Yang, Carbonell, Brown, Pierce, Archibald, and
+  Liu]{Yang99learningapproaches}
+Yiming Yang, Jaime Carbonell, Ralf Brown, Tom Pierce, Brian~T. Archibald, and
+  Xin Liu.
+\newblock Learning approaches for detecting and tracking news events.
+\newblock \emph{IEEE Intelligent Systems}, 14:\penalty0 32--43, 1999.
+
+\end{thebibliography}

@@ -1,0 +1,907 @@
+#LyX file created by tex2lyx 2.0.0
+\lyxformat 345
+\begin_document
+\begin_header
+\textclass article
+\use_default_options false
+\language english
+\inputencoding auto
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\paperfontsize default
+\spacing single
+\use_hyperref 0
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\use_esint 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% 
+\backslash
+pagebreak[4]
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% 
+\backslash
+hspace*{1cm}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% 
+\backslash
+pagebreak[4]
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% 
+\backslash
+hspace*{1cm}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% 
+\backslash
+pagebreak[4]
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+chapter{Background research}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+ifpdf
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+graphicspath
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+Chapter1/Chapter1Figs/PNG/
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+Chapter1/Chapter1Figs/PDF/
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+Chapter1/Chapter1Figs/
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+else
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+graphicspath
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+Chapter1/Chapter1Figs/EPS/
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+{
+\end_layout
+
+\end_inset
+
+Chapter1/Chapter1Figs/
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+fi
+\end_layout
+
+\end_inset
+
+ In this chapter we present the state of the art for the individual problems of this project. We discuss the most prominent solutions and methodologies and we comment on their applicability in our work. 
+\end_layout
+
+\begin_layout Section
+
+Event detection 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:EventDetectionBack"
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+
+Traditional event detection vs social media event detection
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:DifferencesBetweentraditional"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%
+\backslash
+cite{conf/webdb/BeckerNG09}
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+Traditionally, event detection research has focused on detecting news events from continuous streams of news articles. The majority of the work done in this area does not account for any social effects but focuses only on the textual properties of a news article. Therefore, researchers have used natural language tools such as named entity extraction and part-of-speech tagging in order to perform event detection 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Becker_eventidentification"
+
+\end_inset
+
+. However, in this project our problem exhibits several differences compared to traditional event detection since we aim to use data from Twitter.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Twitter and more generally social media documents exhibits several advantages in relation to the event detection task but at the same time pose significant challenges for the researchers. More specifically, a large number of social media documents are irrelevant to real world events as they usually describe updates on the user's life or information unconnected with an event. About 40% of all the tweets are pointless 
+\begin_inset Quotes eld
+\end_inset
+
+babbles
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "conf/icwsm/WengL11"
+
+\end_inset
+
+. Additionally, social media documents contain little textual content which is usually restricted to a few characters (140 in the case of Twitter) which renders traditional event detection methods undesirable. On the other hand, social media documents provide us with new prospects since they often come with additional context information such as tags, locations and network structures.
+\end_layout
+
+\begin_layout Subsection
+
+State of the art event detection in social media streams
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:StateoftheArt"
+
+\end_inset
+
+ One of the first research projects that tried to detect events in Twitter streams aimed to inform people about the occurrence of an earthquake 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Sakaki:2010:EST:1772690.1772777"
+
+\end_inset
+
+. The explicit assumption in their research is that a large number of Twitter users are tweeting when an earthquake happens and therefore it is possible to detect its existence. They have developed an earthquake reporting system which monitors Twitter streams and reports the occurrence of an earthquake promptly. In order to detect tweets discussing earthquake occurrences they have used a support vector machine to detect real occurrences. In order to train their classifier they have prepared a set of training data consisting of positive tweets (tweets which mention an earthquake occurrence) and negative tweets. For each tweet they used different types of features to be used by the classifier:
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+statistical features such as the number of words in a tweet message and the position of the query word within a tweet.
+\begin_inset VSpace 2pt
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+
+keyword features such as the words in a tweet.
+\begin_inset VSpace 2pt
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Itemize
+
+word context features such as the words before and after the query word. By treating users as sensors they have built a socio-temporal model which can predict the occurrence of an earthquake and estimate the location using Kalman filtering. 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset VSpace 15pt
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+After evaluating their reporting system in Japan for a month, they reported that 96% of earthquakes larger than JMA seismic intensity scale 3 or more were successfully detected.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Researchers at University of Edinburgh 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Petrovic10streamingfirst"
+
+\end_inset
+
+ proposed a novel method for detecting news events in Twitter streams. The main objective in their work was the detection of a
+\begin_inset Quotes eld
+\end_inset
+
+first story
+\begin_inset Quotes erd
+\end_inset
+
+ in a stream of tweets. The task of First Story Detection (FSD) was first coined in 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Allan:2002:TDT:772260"
+
+\end_inset
+
+ and aims to identify the first story to discuss a particular event. The traditional method of First Story Detection (FSD) is to represent documents as vectors in term space. Then each document is compared to all the previous ones in the stream and a similarity value is produced. If this value is below a particular threshold it is declared to be a 
+\begin_inset Quotes eld
+\end_inset
+
+first story
+\begin_inset Quotes erd
+\end_inset
+
+. However, the challenge they faced was that Twitter provides a vast amount of data in real-time which renders the traditional method inefficient. Therefore, in order to alleviate this problem they implemented a novel algorithm based on locality-sensitive hashing. Their method uses the cosine between two documents as the similarity metric and a hashing scheme proposed by Charikar 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Charikar02similarityestimation"
+
+\end_inset
+
+. This scheme limits the number of documents to be compared and increases the performance of the algorithm. They reported that the hashing scheme alone yields poor results with a lot of variance. In order to solve the problem they used a variance reduction strategy. They have tried their algorithm on Twitter data collected over a period of six months and they have showed that their system is able to detect major events with reasonable precision. 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ A different approach is proposed by Sayyadi et al. 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "conf/icwsm/SayyadiHM09"
+
+\end_inset
+
+ in their paper 
+\begin_inset Quotes eld
+\end_inset
+
+Event Detection and Tracking in Social Streams
+\begin_inset Quotes erd
+\end_inset
+
+. The main idea behind their proposed algorithm is that documents describing the same event will contain similar keywords, and the graph of keywords for a document collection will contain clusters which are effectively events. They extract keywords from the documents and they construct a graph whose nodes are the keywords and edges between the nodes are formed when those terms co-occur in a document. Their algorithm uses betweenness centrality to assign scores to the nodes and the nodes with high betweenness centrality score are removed. This way they manage to reduce the graph into several unconnected sub-graphs (communities). Then they consider each community of keywords as the key document/event with the keywords being a bag of words summary of the event. Documents in the original corpus which are similar to this key document can be clustered, thus retrieving a cluster of topical documents. Again in their methodology they used cosine similarity to discover document clusters for key documents. An important feature of their system is that they also took their approach one step further by proposing a sliding window approach for subsequent event detection in social media streams as it is considered impossible to apply the event detection algorithm to each new document arriving in the stream without performance degradation.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ One of the best methodologies for event detection is proposed by Becker et al. 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Becker_Gravano_2011"
+
+\end_inset
+
+. In this study they focus on on-line identification of real world event content. A common problem of event detection which arises in Twitter is the false identification of non-event content as event content. For example, specific conversation on topics or memes (e.g., using the hashtag 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+
+\backslash
+verb  
+\end_layout
+
+\end_inset
+
+#followfriday) which do not correspond to real world occurrences might be incorrectly identified as events. In order to deal with this problem they decided to introduce a two stage process where initially each event and its associated messages are grouped together with an on-line clustering algorithm. In the next stage they calculate several features associated with each cluster in order to train a classifier to distinguish between event and non-event clusters. The main advantage of this method is that the features used to classify the clusters exploit the Twitter-specific features thus making the process of event detection much more robust. They evaluated their system by collecting 2,600,000 tweets posted during February 2010. They have used a naïve Bayesian classifier as the baseline method and they showed that their method outperformed the baseline.
+\end_layout
+
+\begin_layout Section
+
+Event summarization
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:EventSummarizationBack"
+
+\end_inset
+
+ The first attempt to summarize events on Twitter was attempted by Chakrabati et al. 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Chakrabarti_Punera_2011"
+
+\end_inset
+
+. Their research paper discusses the problem of extracting the tweets which summarize long-running events, such as football games and they propose a two-step solution. The first part uses a Hidden Markov Model in order to partition the event time-line in sub-events (e.g, tweets before a goal and tweets after the goal) based on the burstiness and the word distribution in tweets. The second stage selects the key tweets of each segment and eventually all key tweets are combined to give the summary. The system takes as its input an event, which is detected using one of the existing event detection algorithms and it outputs a few tweets that best describe the occurrences in that event. Their proposed algorithm is able to isolate at most one sub-event in each time segment, which can then be used by the summarizer to output summaries. They use a variant of the Hidden Markov Model which models each event as a sequence of states. The tweets are the observations generated by the states and the transition between states models the chain of sub-events. They propose two other methods for summarization which are based on simple TF/IDF scores and segmenting the event time-line in equally spaced time intervals. They compare their algorithm’s performance in comparison to these baseline techniques for tweets pertaining to football games and they showed that their algorithm was performing particularly well. However, the authors state that they have not tested their system for one-shot long-running events such as revolutions which can be a significant problem in our project. 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Becker et al. 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Becker_Gravano_2010"
+
+\end_inset
+
+ proposed a different methodology for selecting quality tweets from the set of tweets related to a specific event. The goal of their summarization process is to extract tweets which meet the criteria of quality, relevance and usefulness. The extracted tweets should be comprehensible by a human (i.e. they do not contain short-hand notation), they must reflect the information related to their associated event and they must be useful in describing the main occurrences event. In order to satisfy these criteria the authors propose several methods for extracting these tweets. The main idea behind their approaches is that the tweets which are closer to the centre of a cluster (event) are more likely to reflect the key aspects of the event than other tweets. Therefore, their approaches are based on the notion of centrality. The first method, the centroid similarity approach computes the cosine similarity of the TF-IDF representation of each message to its event cluster centroid. Then the tweets with the highest similarity score are selected. The second method involves message similarity across all messages in an event cluster. This approach, constructs a graph where a cluster message is a node in the graph, and there is an edge connecting a pair of nodes whose cosine similarity exceeds a threshold. This method selects the nodes with the highest degree centrality which is defined as the degree of each node, weighted by the number of nodes in the graph. Finally they use a state of the art method, namely LexRank which defines centrality based on the idea that central nodes are connected to other central nodes. They have evaluated their approaches alongside with some other baseline approaches such as selecting the newest tweets in the cluster and selecting tweets from popular users. The results revealed that the centroid method outperformed the others in all three selection criteria: quality, relevance and usefulness.
+\end_layout
+
+\begin_layout Section
+
+User classification 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:UserClassificationBack"
+
+\end_inset
+
+ Twitter users have diverse backgrounds and they tweet for a variety of topics. There are many different types of users such as celebrities, bloggers, journalists, media, and organizations. Several studies have tried to identify different type of users on Twitter and explore their distinct characteristics. In this section we discuss various techniques which have been used to identify and classify users. 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ In a recent study of the Arab Spring, Lotan et al. 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Lotan"
+
+\end_inset
+
+ investigated how information was propagating during Egypt's uprising. In order to identify information flows they have collected a large amount of tweets during that period and identified the active users in the social network. They selected 963 users, from their dataset, who either were first to tweet, or were retweeted or mentioned at least 15 times. Then they manually classified these users in different categories:
+\begin_inset Newline newline
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+
+Mainstream media organizations (e.g., @AJEnglish, @nytimes). 
+\end_layout
+
+\begin_layout Itemize
+
+Mainstream new media organizations (e.g., @HuffingtonPost). 
+\end_layout
+
+\begin_layout Itemize
+
+Non-media organizations (e.g., @Vodafone, @Wikileaks). 
+\end_layout
+
+\begin_layout Itemize
+
+Mainstream media employees (e.g., @AndersonCooper). 
+\end_layout
+
+\begin_layout Itemize
+
+Bloggers (e.g., @gr33ndata). 
+\end_layout
+
+\begin_layout Itemize
+
+Activists: (e.g., @Ghonim). 
+\end_layout
+
+\begin_layout Itemize
+
+Digerati: (e.g., @TimOReilly). 
+\end_layout
+
+\begin_layout Itemize
+
+Political actors: (e.g., @Diego_Arria, @JeanMarcAyrault). 
+\end_layout
+
+\begin_layout Itemize
+
+Celebrities (e.g., @Alyssa_Milano). 
+\end_layout
+
+\begin_layout Itemize
+
+Researchers: (e.g., @JRICole). 
+\end_layout
+
+\begin_layout Itemize
+
+Bots: (e.g., @toptweets). 
+\end_layout
+
+\begin_layout Itemize
+
+Other: users that do not fall under any of the other categories. 
+\end_layout
+
+\begin_layout Standard
+
+
+\begin_inset VSpace 15pt
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+It is apparent that since we are interested in automatic classification their method is not well suited in our case. However, their work has revealed several challenges of the user classification problem in Twitter which we must overcome in our implementation. The main challenge was that a number of users were very difficult to classify due to the fact that these users could be classified in multiple classes. For example, some users are bloggers but they are also activists and this led to ambiguities during the classification process. Furthermore, a number of accounts were deleted or suspended during the data collection process which inevitably introduced missing nodes in the social network graph. 
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ Leaders, lurkers, associates and spammers are some of the type of users active in Twitter and another research project aimed to automatically identify them 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "DBLP:journals/snam/FazeenDG11"
+
+\end_inset
+
+. They designed two different methods for user classification: a context-dependent method and a context-independent method. They classified the users in four types: leaders, lurkers, spammers and close associates. Their research is based on several assumptions on these types of users. More specifically, they assume that spammers follow many users but they are followed be a few people and they make on average 1,000 tweets per day. On the other hand, leaders are identified by the high rate of tweeting and a large number of followers but almost no followees. Closes associates have strong connectivity to their followers and low rate of tweeting. The final class, lurkers, follow many people, but they rarely post any tweets. When there is no contextual information about a user, such as their followers and @-replies they use the context-independent method which examines the tweeting pattern, otherwise they exploit these contextual information by employing the alternative context-dependent method. The context-dependent method employs a fuzzy logic approach in the first stage to estimate inter-actor relationship strengths and then they remove the links with strong relationships because they naturally represent close associates. Then, in the second stage, they use a linear classifier, using the number of tweets and the followee-follower ratio as two features. The context-independent method uses traditional classifiers and generic actor tweet patterns. They collected the tweets of particular types of tweeters over a period of ten days and then they used these to train three classifiers: naïve Bayesian, multi-layer perceptron (MLP) and a random forest (RF) classifier. In their evaluation the MLP classifier has been found to outperform the naive Bayesian and Random Forest classifiers on the more challenging problem of classifying actors with limited data. Their research gives strong indications that user classification with Twitter data is possible with high performance.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+ A similar approach was taken by Choudhury et al. 
+\begin_inset CommandInset citation
+LatexCommand cite
+after ""
+key "Choudhury"
+
+\end_inset
+
+ in their research which aimed to automatically classify Twitter users in three categories: organizations, journalists and ordinary individuals. Their work offers two significant advantages compared to other methods in the literature. They used Twitter specific features to classify the users which make their system much more robust. They use standard features from previous studies such as network features (followers and followees) and activity features such as the number of tweets for a user. However, they added some additional ones including interaction features (number of retweets, @-replies and tweets containing URLs) and named entities features which capture the presence/absence of named entities in the tweets of a user. Finally, another important feature used in the classifier is the topic distribution which associates the user to a set of 18 broad themes from the IPTC Media Topic News Codes. They have used 8 different classifiers in order to evaluate their design and the results indicated that the best performing classifier was a 
+\begin_inset Formula $k$
+\end_inset
+
+ Nearest Neighbors classifier with 
+\begin_inset Formula $k = 10$
+\end_inset
+
+. Another important contribution of their work is that they investigated the participation of different categories of users in different events. They have showed that different events gather different degrees of participation (number of users from each category) and attention (proportion of posts from each category). 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+% ------------------------------------------------------------------------
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%% Local Variables: 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%% mode: latex
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%% TeX-master: "../thesis"
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Standard
+
+%%% End: 
+\end_layout
+
+\begin_layout Standard
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

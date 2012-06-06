@@ -1,4 +1,4 @@
-\chapter{Developing a proof-of-concept event detection web application}\label{chap:Application}
+\chapter{Developing a proof-of-concept event detection web application}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
