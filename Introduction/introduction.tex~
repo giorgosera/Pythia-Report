@@ -18,46 +18,40 @@ social media have the power to sustain political uprisings while others believe 
 overrated [14]. Nevertheless, there have been several examples of people using social media to oust dictators and
 protest against regimes. This is exactly what happened during the Iranian elections in 2009 and Egypt's uprising in
 the beginning of 2011. During these events people used social media and especially Twitter, to report news during
-protests and in
-uence others to participate.
-The events that took place during the Egyptian uprising engendered an unprecedented 
-ow of information and
-ideas on Twitter. People who were watching their Twitter time-lines could literally see the events unfolding be-
-fore their own eyes. One wonders what would have happened if someone collected all this information and tried
+protests and influence others to participate.
+The events that took place during the Egyptian uprising engendered an unprecedented flow of information and
+ideas on Twitter. People who were watching their Twitter timelines could literally see the events unfolding 
+before their own eyes. One wonders what would have happened if someone collected all this information and tried
 to make sense of them. What if we could be able to detect events and describe them as they are happening?
-Or more interestingly what if we could be able to predict them? These are the questions this project sets out
-to answer, not in a science fiction way but following a structured and scientific methodology. We aim to collect
-data during Egypt's uprising and try to describe what happened in the first stage. At a later stage, our goal is
-to build a framework which will allow us to make predictions about future events based on what we have discovered.
+These are the questions this project sets out
+to answer, not in a science fiction way but following a structured and scientific methodology. We have collected
+social media data from Egypt's uprising and we have tried to describe what happened. Using this case study as a 
+starting point we developed a generic framework for detecting and describing events as they unfold.
 In the last few years a growing community of researchers started using Twitter to conduct research on social net-
 works and data mining. Recently, Lotan et al.[13] attempted to investigate the events that took place during the
 Egyptian revolution by collecting and analysing a large amount of tweets. They have identified different types
-of users (media organizations, bloggers, activists) in the dataset and they studied how each type was in
-uencing
-the other by looking at the information 
-ow between them. Another research project studied the information
+of users (media organizations, bloggers, activists) in the dataset and they studied how each type was influencing
+the other by looking at the information flow between them. Another research project studied the information
 dissemination during the Iranian elections and offered important insight into the dynamics of information propa-
-gation that are special to Twitter [23]. Other studies have investigated event detection and summarization during
+gation that are special to Twitter [23]. Other studies have investigated event detection and summarisation during
 the Egyptian revolution as well as the different type of actors participating in the diffusion of news through Twitter.
 Mining and analysing Twitter data is not an easy task and research has revealed numerous challenges for researchers.
-The biggest challenge is the enormous amount of data 
-owing on Twitter every second requiring careful filtering in
+The biggest challenge is the enormous amount of data flowing on Twitter every second requiring careful filtering in
 order to block unwanted tweets such as updates on someone's life or spam tweets. Additionally, an intrinsic problem
 of analysing on-line data is that they are not always related to real world occurrences. For example, Twitter specific
 memes such as \#musicmonday(users tweet their music preferences) or \#followfriday(someone suggesting to other
 users someone else to follow) produce a massive amount of tweets during a certain time interval but they do not
 correspond in real life events.
 Therefore, the motivation behind this project is firstly to overcome these diffculties and also contribute to the
-research community by providing robust and accurate tools for automatically describe what happened during the
-revolution in Egypt. If we are successful at providing a description of the events then we expect to be able to
-develop tools for inferring future events.
+research community by providing robust and accurate tools for automatically describe and detect events from social media
+content. 
 
 \section{Objectives}	
-In this section we present our main objectives for this project by breaking down the main problem into smaller sub-problems. We believe that this breakdown will help us develop a robust framework for solving the problem by identifying the individual difficulties of each sub-problem.  	
+In this section we present our main objectives for this project by breaking down the main problems into smaller sub-problems. We believe that this breakdown will help us develop a robust framework for solving the problem by identifying the individual difficulties of each sub-problem.  	
 
 \subsection{Event detection }\label{sec:EventDetection}
 
-One of the main objectives of this project is to develop a framework for event detection. We have collected over 100,000 tweets related to the revolution and our aim is to sift through them and identify the main events that took place. Below we present the formal definition of this problem along with the necessary definitions.\\\\
+The main objective of this project is to develop a framework for event detection. We have collected over 100,000 tweets related to the revolution and our aim is to sift through them and identify the main events that took place. Below we present the formal definition of this problem along with the necessary definitions.\\\\
 A \textbf{real-world event} identifies something non-trivial happening at a certain time and at a certain place \cite{Yang99learningapproaches}. We describe a real-world event to be a set of attributes describing that event such as keywords, geographic location, time of occurrence and the social actors (Twitter users) involved in it. It is possible to have incomplete or no information at all for an event therefore our system should take into consideration these possibilities.\\\\
 A \textbf{tweet} is defined as a tuple ($a, c, H, d, F_T$) where \boldmath  $a$ \unboldmath is the screen name of the author, \boldmath $c$  \unboldmath is the textual content, $H$ is the set of hashtags associated with the tweet, \boldmath $d$ \unboldmath is the timestamp and $F_T$ is the feature vector.  The feature vector contains a set of attributes associated with the tweet such as the number of times this tweet has been retweeted, whether or not this tweet is a @-reply, the set of URLs and/or named entities if any.\\\\
 A \textbf{tweet stream} is defined as $(t_1, t_2, t_3,..., t_N)$ where $N$ is the number of tweets in the stream, $t_i$ is a tweet and $d_{t_i} < d_{t_{i+1}}$ (i.e. ti has occurred prior to $t_{i+1}$).\\\\
@@ -65,28 +59,39 @@ A \textbf{topic} is defined as $ \{t_i | t_i \in T \wedge |A| \geq U \wedge F_P 
 Given a tweet stream $T$ our aim is to partition it into a set of distinct topics $P = \{p_1, p_2, p_3,..., p_{N_p}\}$ where $N_p$ is the number of detected topics. Then based on the feature vector $F_p$ we can associate each of the topics with one or more events.   
 
 \subsection{Event summarization}\label{sec:EventSummarization}
-When an event has been detected it would be interesting to be able to describe what happened by extracting a description in the form explained below. Therefore, we are aiming to develop the framework for automatic summarization of the event. The formal definition of the event summarization problem is given below.\\\\
+When an event has been detected it would be interesting to be able to describe what happened by extracting a description in the form explained below. Therefore, we wanted to develop the framework for generating automatic summaries for an event. The formal definition of the event summarisation problem is given below.\\\\
 Given a topic or topics associated with an event as described above, we aim to extract an \textbf{event label} which serves as a description for this event.\\\\
 An event label is defined as a set of descriptors $D = \{d_i | i\in\{1, 2,..., N\} \wedge |D| = X\}$ where $N$ is the number of tweets associated with this event and a descriptor $d_i$ is a tuple $(c_i, d_i, H_i, s_i)$ where $c_i$ is the content of tweet $t_i$,  di the timestamp of tweet $t_i$, $H_i$ is the set of hashtags associated with tweet $t_i$ and $s_i$ is the score of tweet $t_i$ calculated by the summarization algorithm. Only the $X$ highest scored tweets will appear in the event label.\\\\
 The score is calculated based on several criteria such as quality, relevance and usefulness of a tweet. Quality refers to the textual quality of the tweet i.e. low quality tweets contain slang and short hand notation. Relevance is how well a tweet reflects information related to the associated event and usefulness is how well the tweet informs a human about the event.
 
 \subsection{Actor classification  }\label{sec:ActorClassification}
-Different types of users were involved in the information dissemination on Twitter during the Egyptian revolution. Varying from media organisations and activists to normal individuals, these people were the people who ignited, documented and sustained the revolution. We aim to develop a tool for automatic classification of the users into different categories.\\\\
+In order to further understand the structure of a detected event we wish to identify the different types of users that are involved in the information dissemination on Twitter. Varying from media organisations and activists to normal individuals, these people were the people who ignited, documented and sustained the revolution. We aim to develop a tool for automatic classification of the users into different categories.\\\\
 An \textbf{actor} is defined as $\{a, fr, fl, T, F\}$ where \boldmath $a$ \unboldmath is the actor's username, $fr$ and $fl$ are the sets of actor's followers and followees respectively, $T$ is the set of tweets which belong to this actor and $F$ is the feature vector. The feature vector contains the activity features of the actor such as the total number of tweets, the fraction of retweets among all the tweets from a user, the fraction of @-replies directed to other users and the fraction of tweets containing a URL.\\\\
 An \textbf{actor label} is defined as $l_a \in \{c_1, c_2, c_3,..., c_N\}$ where a is an actor, $N$ is the number of existing classes and $c_i$ is an actor type such as blogger, activist and media organisation. 
 Given a training set of actors and their corresponding actor labels $\{(a_1, l_{a_1}), (a_2, l_{a_2}),..., (a_N, l_{a_N})\}$ our aim is to find a mapping $l_a = f(a)$ which can predict the associated actor label $l_a$ for an actor \boldmath $a$ \unboldmath. The prediction will be based on the feature vector $F$ and the other attributes associated with an actor such as the sets of followers and followees.
 
 \section{Contributions}
-The following list summarises the main contributions of this project:
+In the process of developing the solutions for the problems described above we have come across several
+challenges as well as some opportunities. We have tried to tackle all the difficulties and also exploit the 
+opportunities we were given. Our efforts have led to several contributions and the following list summarises the main contributions of this project:
 \begin{itemize}
- \item A data mining tool to detect and analyse events based on a stream of tweets.
- \item An extensive literature survey about event detection, event summarization and user classification using social media content.
- \item A comparison study of several clustering algorithms to assess their feasibility in clustering Twitter content.
- \item A proof-of-concept user-friendly web application.
- \item Case studies on real data from the Arab Spring. 	 
+ \item The solution of the event detection and summarisation problems led to the development of a data mining toolset which consists of 
+ several sub-components. These components vary from data acquisition tools to clustering algorithms and text processing tools. These
+ individual components can act independently to solve smaller tasks but most importantly they can be combined to solve the problems posed 
+ by this project.  
+ \item In order to be able to develop our solution we have conducted an extensive literature survey about event detection, event summarisation and Twitter user classification. 
+ Our research was focused on these three areas in the context of social media and more specifically on Twitter content. The emergence of social networks has sparked the interest of the research community and 
+ numerous solutions have been proposed over the last few years. We have gathered the most prominent solutions in the literature and we have commented on their applicability and 
+ feasibility in our project.
+ \item The core component of our solution for the event detection problem is text clustering. The challenging aspect of our work is that we had to deal with social media content
+ which offers some advantages but at the same time it poses significant challenges. After implementing several clustering algorithms we have conducted a thorough evaluation study to assess their individual performance in several aspects that are unique to social media documents. Additionally, the event summarisation and user classification components have been evaluated as well and our results can be used as a guidance to future projects in this area.      
+ \item We have built a proof-of-concept web application which uses our algorithm to detect events and summarize them using Twitter data. The application provides a user friendly
+ environment and data visualisations to allow the user to discover events in historic data.
+ \item We have collected and analysed a large number of Twitter content related to the Arab Spring and we have used this dataset to conduct a case study on real data using
+ our algorithm and web application.  	 
 \end{itemize}\vspace{15pt}
-
 \section{Report Structure}
+TODO: Complete this section when the rest of the report is done.
 %%% ----------------------------------------------------------------------
 
 

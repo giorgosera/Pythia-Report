@@ -61,15 +61,15 @@ Since tweets usually contain URLs and HTML code one of the first priorities is t
 can be used on our data:
 
 \begin{itemize}
- \item Sentence segmentation and tokenization: Raw text is split into sentences and then each sentence is further subdivided into words using a tokenizer. 
- \item Stopword removal: Some of the words occuring in the documents are common English words such as 'the', 'and' and 'a'. These words convey almost no information 
+ \item \textbf{Sentence segmentation and tokenization:} Raw text is split into sentences and then each sentence is further subdivided into words using a tokenizer. 
+ \item \textbf{Stopword removal:} Some of the words occuring in the documents are common English words such as 'the', 'and' and 'a'. These words convey almost no information 
  but most importantly, they can reduce the clustering accuracy. Two documents can be erroneusly considered related if they contain common English words like the ones
   we have already mentioned. Therefore, it is important to remove these stopwords. Usually, a dictionary of the common English stopwords is used to filter them out.   
- \item Stemming: This is a mechanism for reducing English words to their stem form. For example, the stem form of the words `connections' and `connected' is `connect'. This    mechanism is particularly useful in the field of information retrieval and indexing. M.F Porter designed the most widely used stemming algorithm in 1980 [Insert ref here]. This algorithm works by applying a set of different rules, which after a number of iteration yield the final resut which is the stem of the word. Porter
+ \item \textbf{Stemming:} This is a mechanism for reducing English words to their stem form. For example, the stem form of the words `connections' and `connected' is `connect'. This mechanism is particularly useful in the field of information retrieval and indexing. M.F Porter designed the most widely used stemming algorithm in 1980 [Insert ref here]. This algorithm works by applying a set of different rules, which after a number of iteration yield the final resut which is the stem of the word. Porter
 has developed 62 rules which may or may not apply to a given word.
 \end{itemize}\vspace{15pt}
 
-In section \ref{chap:SummaryGen} we explore more applications of NLP and how we can use them to extract automatic summaries, named entities or sentiment from documents.
+In section \ref{sec:SummaryGen} we explore more applications of NLP and how we can use them to extract automatic summaries, named entities or sentiment from documents.
 
 \subsection{Inverted index}
 An inverted index, also known as an inverted file, is a data structure central to text-based information retrieval. The name is derived from its 
@@ -101,28 +101,32 @@ can find the words that appear either too often or less frequently and filter th
 to reduce the dimensionality of our dataset by removing unneccesary words. Alternatively, we
 can remove documents/tweets which contain keywords that appear too often or less frequently.
 
-\section{Clustering}
+\section{Cluster Analysis}
 
-TODO Avrio: Grapse mia eisagwgi gia to clustering j an theleis grapse ta requirements t clustering..etsi wste na
-sindeseis ta algorithms ..taxa "these are the algos that fulfill our reqs"..vale eikonoues gia oulla
+Cluster analysis is the process of grouping a set of data objects into multiple clusters where all the
+objects in a cluster have high similarity but they are very dissimilar to objects in other clusters. The set
+of clusters resulting from a cluster analysis can be referred to as a clustering. Clustering is an unsupervised 
+learning method since deals with finding a structure in a collection of unlabeled data. Figure 3.3 depicts a simple 
+clustering example where a clustering algorithm is applied on an unlabeled dataset and four different clusters are detected.\\
+Cluster analysis is applied in a wide range of applications such as business intelligence, image pattern recognition, biology and 
+security. In our project we are interested in cluster analysis and its application in document clustering. We would like to cluster tweets 
+which are similar in terms of both textual content and describe the same topic.\\
+In the rest of this section we describe the key ideas behind document clustering and we explain the main clustering algorithms that
+will be used in our implementation.
 
-Clustering is the process of grouping a set of data objects into multiple clusters where all the
-objects in a cluster have high similarity but they are very dissimilar to objects in other clusters.
-Dissimilarities and similarities are calculated based on the attribute values of each data object
-and they often involve distance measures. Clustering is an unsupervised learning method since
-the object labels are not known beforehand.
-In our project we are interested in clustering because we would like to cluster tweets which
-are similar in terms of both textual content and social content. Additionally, due to the fact
-that we have to deal with vast amount of data we are interested in scalability and performance.
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=1.5in, width=4in]{clustering}
+    \caption{The result of appplying a clustering algorithm to unlabeled data. Four distinct clusters have been detected.}
+    \label{ClusteringExample}
+  \end{center}
+\end{figure} 
 
 \subsection{Vector space representation}
 
-Find a suitable place for this paragraph:
------------------------------------------
-Preprocessing is also required to transform the documents (tweets) in a form that
-will allow us to perform clustering on them. Therefore,  we define 'preprocessing' as all tasks which take place before transforming
-the documents into the vector space representation. Figure 3.2 show the sub-components of the preprocessing module.
-
+Document need to be preprocessed in order to be in a form that will allow us to perform clustering. 
+The most common approach is to use the vector space representation model. The vector space representation transforms the 
+documents into vectors of term frequencies which can then be used as a means to assess the similarity between documents.\\
 We can represent each document in a dataset by a vector of identifiers. Usually, these identifiers are the distinct words in the document and 
 the resulting vector is called term-frequency vector. If we combine all the vectors for the documents in our dataset we will end up with an 
 \boldmath $m \times n$  \unboldmath  matrix \boldmath $A$ \unboldmath. Each of the $m$ documents in the document collection are assigned a row 
@@ -130,8 +134,7 @@ in the matrix, while each of the $n$ unique terms in each document are assigned 
 $A$ \unboldmath, indicates not only that term $j$ occurs in document $i$, but also the number of times the term appears in that document. Since the number of terms in a given 
 document is typically far less than the number of terms in the entire document collection, A is usually very sparse.\\
 For example in Table 3.1 we see that $Document1$ contains three instances of the word team, while football occurs five times. We can also infer that
-the words ball and world are missing for the entire document, as indicated by the value of zero at those entries of the matrix.  
-
+the words ball and world are missing for the entire document, as indicated by the value of zero at those entries of the matrix.\\  
 The main advantage of transforming the documents in the vector space is that we can define vector-space similarities between documents and therefore
 we can apply clustering algorithms on the document collection. In section we provide a more detailed discussion on similarity metrics and the vector space 
 representation is used in clustering documents.
@@ -169,26 +172,69 @@ a sorted list of the most relevant documents.
 \subsection{Feature selection}
 TODO: Discusss feature selection methods used in our system.
 
+\subsection{Distance measures}
+TODO: Describe the three main measures we use
+
+\subsection{Clustering methods}
+There are many clustering algorithms and usually the belong to one of the following categories, as they are described in [put reference to the book]:
+
+\begin{itemize}
+ \item \textbf{Partitioning methods:} Partiotioning methods operate on a number of data points and form partitions of the data where each partition is a cluster. Usually, these methods have the restriction that each object must belong to a single cluster. They are only effective for a small to medium datasets. 
+ \item \textbf{Hierarchical methods:} A hierarchical method creates a hierarchical decomposition of the given set of data objects. These methods can be firther subdivided 
+ in agglomerative and divisive, based on how the decomposition is formed. Hierarchical methods suffer from the fact that erroneous merges or split cannot be undone. 
+ \item \textbf{Density-based methods:} These methods, unlike most other techniques, can find clusters of arbitrary shapes. They can do so by employing the notion of density. The
+ main idea is to keep growing a cluster as long as the density of a 'neighborhood' exceeds some threshold. Therefore, clusters are dense regions of data points that are separated 
+ by low-density regions.
+ \item \textbf{Grid-based methods:} Grid-based methods quantize the space into a number of cells which form a grid structure, All the clustering operations are performed on the grid structure. Since the provessing time is only dependent on the number of cells and not the number of data points these methods have fast processing time. 
+\end{itemize}\vspace{15pt}
+
+Below we outline the basic clustering methods that will be used in our system and we look into their key ideas that will guide 
+our implementation. 
 
 \subsection{Kmeans algorithm}
+k-Means algorithm belongs to the partioning methods category. A partitioning method distributes the objects in $D$  into k clusters, $C_1, ..., C_k$, such that $C_i \subset D$ and $C_i \cap C_j = \emptyset$ for $(1 \leq i, j \leq k)$. k-Means is a centroid-based technique whic means that a cluster, $C_i$, is represented by a centroid which can be the mean of all the points in the cluster. Practically, this representation is the centre point of the cluster. \\
+More specifically, the k-Means algorithm starts by randomly selecting k of the object in D, and each one represents a cluster centre. Then for each of the remaining objects in D, the algorithm calculates the distance between each of the k cluster centres. The closest cluster is selected and that point is assigned to this cluster. The mean of each cluster is re-calculated after a new point has been assigned to it. At this point the k-Means algorithm iteratively tries to improve the within cluster variation (improving an objective function) by reassigning all the objects according to the new cluster centres. The algorithm continues until it converges to the point where the clusters formed in the previous iteration are the same to the clusters formed in this iteration.\\ 
+The algorithm is not guaranteed to converge to a global optimum and the results depend on the initial allocations of the k centres. The time complexity is $O(nkt)$ where n is the total number of of objects, k is the number of clusters and t is the number of iterations. Therefore, the k-Means algorith is relatively scalable. 
 
 \subsection{DBSACN algorithm}
+k-Means algorithm and hierarchical clustering algorithms are very good at clustering spherical-shaped clusters. However, they are not able to detect clusters of arbitrary shape such as the one below.  \
+
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=2in, width=4in]{dbscan-example}
+    \caption{The DBSCAN algorithm belongs to the density-based methods which can find clusters of arbitrary shapes (not only spherical).}
+    \label{DBSCANExample}
+  \end{center}
+\end{figure} 
+
+In order to alleviate the problem one have to look into density-based clustering algorithms. These algorithms model clusters as dense regions in the data space. We have provided our own implementation of the Density-Based Clustering Based on Connected Regions with High Density (DBSCAN) and below we briefly explain the algorithm. \\ 
+DBSCAN defines density of an object $o$ as the number of objects close to $o$. DBSCAN finds core objects which are objects with dense neighborhoods. Then it connects those core objects and their neighborhoods to form clusters. In order to assess density, DBSCAN uses a constant $\epsilon  > 0$ which defines the radius of the neighborhood of an object $o$ and then finds the number of objects in the neighborhood. If the number is above a threshold $MinPts$ then the neighborhood is considered dense. Given a set, $D$, of objects, we can identify the core objects using $\epsilon$ and $MinPts$. The problem of clustering then reduces to the task of finding dense regions using the core objects and their neighborhoods. \\
+The complexity of the algorithm in our implementation is $O(n^2)$ but it can be reduced to $O(n\log n)$ if a spatial index is used. This means that this algorithm doesn't allow us to scale it up to large volume of data. The main disadvantage of the DBSCAN algorithm is that the user has to pass the $\epsilon $ and the $MinPts$ parameters which usually is a difficult task and some datasets are very sensitive to variations of these parameters. 
 
 \subsection{Non-negative matrix factorisation algorithm}
+Non-negative matrix factorization (NMF) is not a clustering algorithm per se but it can be shown that it is equivalent to a relaxed form of k-Means algorithm. This algorithm takes as input the term-document matrix, constructed during clustering pre-processing and decomposes it into two other matrices. The first one is a term-feature matrix and the other a feature-document matrix. In the latent semantic space derived by the NMF, each axis captures the base topic of a particular document cluster, and each document is represented as an additive combination of the base topics. The cluster membership of each document can be easily determined by finding the base topic (the axis) with which the document has the largest projection value. The only constraint of the algorithm is that the two derived matrices should be non-negative. 
 
 \subsection{Online clustering algorithm}
+All the algorithms described above operate on the whole dataset, $D$, and sometimes this is not desirable or not even neccessary. Especially if the dataset is too large and we are concerned about performance and scalability. Therefore, a family of algorithms have been studied in order to modify common algorithms for scalability. These algorithms are called sequential or online clustering algorithms. By online in this context we mean an algorithm that does not keep all the data objects in memory at the same time, but processes them sequentially, keeping only a subset if them.\\
+Suppose we are given a sequence of N tweets $T = {t_1, ..., t_N}$ where each $t_i$ is a vector of $a$ attribute values, and we want to split them into $K$ clusters. Each cluster is described by a prototype vector $p_i = {p_1, ..., p_f}$ where $i = 1, ..., K$. Given that the task of finding good clusters is to minimize an objective distance function $J$ the algorithm works as follows:
+\begin{enumerate}
+   \item Pick the next example in the sequence T
+   \item Compute the distances from this example to all the cluster prototypes and pick the minimum one.
+   \item Update the prototype vector in order to come closer to the current example  
+   \item Goto step 1  
+ \end{enumerate} 
+ 
+The implementation of our online algorithm is based on the work proposed in the paper "Improving the Robustness of ‘Online Agglomerative Clustering Method’ Based on Kernel-Induce Distance Measures" by Zhang et al. They have used kernel-functions for distance measures and post-processing filtering is performed to remove noise from data. Extending their work, in our implementation we have tried to increase its scalability by allowing only a sliding window of $n$ tweets to be in memory each time when the term-document vectors are calculated. 
 
 \section{Automatic text summaries}\label{SummaryGen}
 
-\subsection{Background}
-
 \subsection{Generating automatic document cluster summaries}
+TODO: Add the theoretical background for this.
 
 \subsection{Detecting sentiment, named entities and locations in documents}
 
-\section{Twitter user classification}
 
-\subsection{Background}
+\section{Twitter user classification}
 
 \subsection{Decision trees}
 

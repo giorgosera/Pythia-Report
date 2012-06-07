@@ -1,39 +1,24 @@
-\chapter{My Third Chapter}
+\chapter{Developing a proof-of-concept event detection web application}\label{chap:Application}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
     \graphicspath{{Chapter3/Chapter3Figs/EPS/}{Chapter3/Chapter3Figs/}}
 \fi
 
-\section{First Section of the Third Chapter}
-\markboth{\MakeUppercase{\thechapter. My Third Chapter }}{\thechapter. My Third Chapter}
-And now I begin my third chapter here ...
+\section{Motivation}
+Why did we created this web application?
 
-\subsection{first subsection in the First Section}
-... and some more 
+\section{System architecture}
 
-\subsection{second subsection in the First Section}
-... and some more ...
+Explain briefly in several subsections the individual components of the GUI tool
+such as how do we retrieve data (Topsy API), what framework are we using (Tornado)
+and how we produce the visualizations (d3.js)
 
-\subsubsection{first subsub section in the second subsection}
-... and some more in the first subsub section otherwise it all looks the same
-doesn't it? well we can add some text to it ...
+\section{Graphical User Interface}
 
-\subsection{third subsection in the First Section}
-... and some more ...
+Explain and show screenshots from the prototypical application.
 
-\subsubsection{first subsub section in the third subsection}
-... and some more in the first subsub section otherwise it all looks the same
-doesn't it? well we can add some text to it and some more and some more and
-some more and some more and some more and some more and some more ...
-
-\subsubsection{second subsub section in the third subsection}
-... and some more in the first subsub section otherwise it all looks the same
-doesn't it? well we can add some text to it ...
-
-\section{Second Section of the Third Chapter}
-\markboth{\MakeUppercase{\thechapter. My Third Chapter }}{\thechapter. My Third Chapter}
-and here I write more ...
+\section{Summary}
 
 % ------------------------------------------------------------------------
 
