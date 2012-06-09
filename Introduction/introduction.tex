@@ -1,5 +1,5 @@
 %%% Thesis Introduction --------------------------------------------------
-\chapter{Introduction}
+\chapter{Introduction}\label{Introduction}
 \ifpdf
     \graphicspath{{Introduction/IntroductionFigs/PNG/}{Introduction/IntroductionFigs/PDF/}{Introduction/IntroductionFigs/}}
 \else
@@ -58,7 +58,7 @@ A \textbf{tweet stream} is defined as $(t_1, t_2, t_3,..., t_N)$ where $N$ is th
 A \textbf{topic} is defined as $ \{t_i | t_i \in T \wedge |A| \geq U \wedge F_P \wedge \forall t_i, t_j. t_i$ is similar to $t_j$ with respect to this topic $\}$ where $T$ is the tweet stream, $A$ is the set of unique authors related to the topic and $U$ is the minimum number of actors needed to be involved in the topic. $F_P$ is a feature vector containing attributes of the topic such as time, geographical location and keywords. The similarity of a tweet with respect to a topic is based on the tweet feature vector $F_T$ as well as the textual content of the tweet.\\\\
 Given a tweet stream $T$ our aim is to partition it into a set of distinct topics $P = \{p_1, p_2, p_3,..., p_{N_p}\}$ where $N_p$ is the number of detected topics. Then based on the feature vector $F_p$ we can associate each of the topics with one or more events.   
 
-\subsection{Event summarization}\label{sec:EventSummarization}
+\subsection{Event summarisation}\label{sec:EventSummarisation}
 When an event has been detected it would be interesting to be able to describe what happened by extracting a description in the form explained below. Therefore, we wanted to develop the framework for generating automatic summaries for an event. The formal definition of the event summarisation problem is given below.\\\\
 Given a topic or topics associated with an event as described above, we aim to extract an \textbf{event label} which serves as a description for this event.\\\\
 An event label is defined as a set of descriptors $D = \{d_i | i\in\{1, 2,..., N\} \wedge |D| = X\}$ where $N$ is the number of tweets associated with this event and a descriptor $d_i$ is a tuple $(c_i, d_i, H_i, s_i)$ where $c_i$ is the content of tweet $t_i$,  di the timestamp of tweet $t_i$, $H_i$ is the set of hashtags associated with tweet $t_i$ and $s_i$ is the score of tweet $t_i$ calculated by the summarization algorithm. Only the $X$ highest scored tweets will appear in the event label.\\\\

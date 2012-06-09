@@ -191,30 +191,56 @@ There are many clustering algorithms and usually the belong to one of the follow
 Below we outline the basic clustering methods that will be used in our system and we look into their key ideas that will guide 
 our implementation. 
 
-\subsection{Kmeans algorithm}
+\subsubsection{k-Means algorithm}
 k-Means algorithm belongs to the partioning methods category. A partitioning method distributes the objects in $D$  into k clusters, $C_1, ..., C_k$, such that $C_i \subset D$ and $C_i \cap C_j = \emptyset$ for $(1 \leq i, j \leq k)$. k-Means is a centroid-based technique whic means that a cluster, $C_i$, is represented by a centroid which can be the mean of all the points in the cluster. Practically, this representation is the centre point of the cluster. \\
-More specifically, the k-Means algorithm starts by randomly selecting k of the object in D, and each one represents a cluster centre. Then for each of the remaining objects in D, the algorithm calculates the distance between each of the k cluster centres. The closest cluster is selected and that point is assigned to this cluster. The mean of each cluster is re-calculated after a new point has been assigned to it. At this point the k-Means algorithm iteratively tries to improve the within cluster variation (improving an objective function) by reassigning all the objects according to the new cluster centres. The algorithm continues until it converges to the point where the clusters formed in the previous iteration are the same to the clusters formed in this iteration.\\ 
+More specifically, the k-Means algorithm starts by randomly selecting k of the object in D, and each one represents a cluster centre. Then for each of the remaining objects in D, the algorithm calculates the distance between each of the k cluster centres. The closest cluster is selected and that point is assigned to this cluster. The mean of each cluster is re-calculated after a new point has been assigned to it. At this point the k-Means algorithm iteratively tries to improve the within cluster variation (improving an objective function) by reassigning all the objects according to the new cluster centres. The algorithm continues until it converges to the point where the clusters formed in the previous iteration are the same to the clusters formed in this iteration. Figure 3.4 (TODO:Put image ref) depicts a simple example of the k-Means algorithm with two clusters. In the first image, the two centroids, which are depicted as dark circles are initialised to a random position in the space. In the second image each of the data points is assigned to the nearest centroid and in this case A and B are assigned to the top centroid and C, D, and E are assigned to the bottom centroid. In the third image, each centroid's average is re-calculated and moved to its new position. When the assignments are calculated again, it turns out that C is now closer to the top centroid, while D and E remain closest to the bottom one. Thus, the final result is that A, B, and C belong in one cluster, and D and E in the other. \\
+
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=2.5in, width=4in]{kmeans-example}
+    \caption{k-Means clustering with two clusters}
+    \label{kMeansExample}
+  \end{center}
+\end{figure} 
+ 
 The algorithm is not guaranteed to converge to a global optimum and the results depend on the initial allocations of the k centres. The time complexity is $O(nkt)$ where n is the total number of of objects, k is the number of clusters and t is the number of iterations. Therefore, the k-Means algorith is relatively scalable. 
 
-\subsection{DBSACN algorithm}
+\subsubsection{DBSCAN algorithm}
 k-Means algorithm and hierarchical clustering algorithms are very good at clustering spherical-shaped clusters. However, they are not able to detect clusters of arbitrary shape such as the one below.  \
 
 \begin{figure}[!htbp]
   \begin{center}
-    \includegraphics[height=2in, width=4in]{dbscan-example}
+    \includegraphics[height=3in, width=4in]{dbscan-example}
     \caption{The DBSCAN algorithm belongs to the density-based methods which can find clusters of arbitrary shapes (not only spherical).}
     \label{DBSCANExample}
   \end{center}
 \end{figure} 
 
-In order to alleviate the problem one have to look into density-based clustering algorithms. These algorithms model clusters as dense regions in the data space. We have provided our own implementation of the Density-Based Clustering Based on Connected Regions with High Density (DBSCAN) and below we briefly explain the algorithm. \\ 
-DBSCAN defines density of an object $o$ as the number of objects close to $o$. DBSCAN finds core objects which are objects with dense neighborhoods. Then it connects those core objects and their neighborhoods to form clusters. In order to assess density, DBSCAN uses a constant $\epsilon  > 0$ which defines the radius of the neighborhood of an object $o$ and then finds the number of objects in the neighborhood. If the number is above a threshold $MinPts$ then the neighborhood is considered dense. Given a set, $D$, of objects, we can identify the core objects using $\epsilon$ and $MinPts$. The problem of clustering then reduces to the task of finding dense regions using the core objects and their neighborhoods. \\
+In order to alleviate the problem one have to look into density-based clustering algorithms. These algorithms model clusters as dense regions in the data space. One of the most popular algorithms of this kind is the Density-Based Clustering Based on Connected Regions with High Density (DBSCAN). \\ 
+DBSCAN defines density of an object $o$ as the number of objects close to $o$. DBSCAN finds core objects which are objects with dense neighborhoods. Then it connects those core objects and their neighborhoods to form clusters. In order to assess density, DBSCAN uses a constant $\epsilon  > 0$ which defines the radius of the neighborhood of an object $o$ and then finds the number of objects in the neighborhood. If the number is above a threshold $MinPts$ then the neighborhood is considered dense. Given a set, $D$, of objects, we can identify the core objects using $\epsilon$ and $MinPts$. The problem of clustering then reduces to the task of finding dense regions using the core objects and their neighborhoods. \\\\
 The complexity of the algorithm in our implementation is $O(n^2)$ but it can be reduced to $O(n\log n)$ if a spatial index is used. This means that this algorithm doesn't allow us to scale it up to large volume of data. The main disadvantage of the DBSCAN algorithm is that the user has to pass the $\epsilon $ and the $MinPts$ parameters which usually is a difficult task and some datasets are very sensitive to variations of these parameters. 
 
-\subsection{Non-negative matrix factorisation algorithm}
-Non-negative matrix factorization (NMF) is not a clustering algorithm per se but it can be shown that it is equivalent to a relaxed form of k-Means algorithm. This algorithm takes as input the term-document matrix, constructed during clustering pre-processing and decomposes it into two other matrices. The first one is a term-feature matrix and the other a feature-document matrix. In the latent semantic space derived by the NMF, each axis captures the base topic of a particular document cluster, and each document is represented as an additive combination of the base topics. The cluster membership of each document can be easily determined by finding the base topic (the axis) with which the document has the largest projection value. The only constraint of the algorithm is that the two derived matrices should be non-negative. 
+\subsubsection{Non-negative matrix factorisation algorithm}
+Non-negative matrix factorization (NMF) is not a clustering algorithm per se but it can be shown that it is equivalent to a relaxed form of k-Means algorithm. This algorithm takes as input the term-document matrix, constructed during clustering pre-processing and decomposes it into two other matrices. The first one is a feature-term matrix (or features matrix) and the other a document-feature matrix (or weight matrix). In the latent semantic space derived by the NMF, each axis captures the base topic of a particular document cluster, and each document is represented as an additive combination of the base topics. The cluster membership of each document can be easily determined by finding the base topic (the axis) with which the document has the largest projection value. The only constraint of the algorithm is that the two derived matrices should be non-negative.\\\\ 
+In the context of document clustering we use matrix factorisation to reduce a large set of documents to a smaller set that captures their common topics (features) [put ref to the book Collective Intelligence ]. We start with a term-frequency matrix and we wish to factorise this matrix to get the two matrices we mentioned above. The features matrix has a row for each feature and a column for each term (word). An example of such a matrix is shown below. The values indicate how important a word is to a feature. Each feature represents a topic that is implied from a set of documents. 
 
-\subsection{Online clustering algorithm}
+\[
+\bordermatrix{~ & football & ball & england & newspaper \cr
+                  feature 1 & 1 & 0 & 3 & 2 \cr
+                  feature 2 & 0 & 1 & 3 & 1\cr
+                  feature 3 & 0 & 2 & 2 & 1\cr}
+\]\\
+The weights matrix maps the features to the documents. It has a row for each document and a column for each feature. The values indicate how much each feature matches to each document. An example of the weights matrix is shown below. 
+
+\[
+\bordermatrix{~ & feature 1 & feature 2 & feature 3\cr
+                  Document 1 & 1 & 5 & 3\cr
+                  Document 2 & 3 & 1 & 1\cr
+                  Document 3 & 0 & 2 & 3\cr}
+\] \\
+The original matrix can be reconstructed by multiplying the weights matrix by the features matrix, although the resulting matrix would not be an exact reconstruction of the original one but an approximation. 
+
+\subsubsection{Online clustering algorithm}
 All the algorithms described above operate on the whole dataset, $D$, and sometimes this is not desirable or not even neccessary. Especially if the dataset is too large and we are concerned about performance and scalability. Therefore, a family of algorithms have been studied in order to modify common algorithms for scalability. These algorithms are called sequential or online clustering algorithms. By online in this context we mean an algorithm that does not keep all the data objects in memory at the same time, but processes them sequentially, keeping only a subset if them.\\
 Suppose we are given a sequence of N tweets $T = {t_1, ..., t_N}$ where each $t_i$ is a vector of $a$ attribute values, and we want to split them into $K$ clusters. Each cluster is described by a prototype vector $p_i = {p_1, ..., p_f}$ where $i = 1, ..., K$. Given that the task of finding good clusters is to minimize an objective distance function $J$ the algorithm works as follows:
 \begin{enumerate}
@@ -228,15 +254,39 @@ The implementation of our online algorithm is based on the work proposed in the 
 
 \section{Automatic text summaries}\label{SummaryGen}
 
-\subsection{Generating automatic document cluster summaries}
-TODO: Add the theoretical background for this.
+Another integral component of our framework is the module repsonsible for generating automatic summaries of the events. In Chapter \ref{chap:Introduction}
+we described the problem of event summarisation as the task that will extract the top tweets for an event that are most helpful for a human to understand the event.
+The term 'helpful' is vague and therefore we have defined three criteria, described in [TODO: put ref for the paper Selecting Quality Twitter Content for Events ] that will evaluate qualitatively our summaries and guide our implementation choices. The three criteria are:
 
-\subsection{Detecting sentiment, named entities and locations in documents}
+\begin{itemize}
+ \item \textbf{Quality:} It refers to the textual quality of the messages, which reflects how well they can be understood by a human.
+ \item \textbf{Relevance:} It refers to how well a Twitter message reflects information related to its associated event.
+ \item \textbf{Usefulness:} It refers to the potential value of a document for someone who is interested in learning more about an event.
+\end{itemize}\vspace{15pt}
+
+\subsection{Generating automatic document cluster summaries}
+In general, in automatic text summarisation we are interested in generating a shortened version of a large corpus or document but maintaining the integrity and meaning of 
+the original text. There are to variations of the automatic text summarisation: the extractive summarisation method which produces summaries by choosing a subset of the sentences
+in the original document or documents and abstractive summarisation, where the information in the text is rephrased.\\\\
+In our case the task is to reduce a large set of tweets in a smaller subset by ranking the individual tweets in a subset and selecting the top ranking ones.
+In our project we consider two methods extractive summarisation methods, the centroid-based summarisation and the LexRank algorithm.
+
+\subsubsection{Centroid-based summarisation}
+The centroid similarity approach computes the similarity of each message to its associated event cluster centroid. The cluster centroid is calculated by averaging the weight across all the document TF-IDF weigthed term-frequency vectors in a specific event. The method then selects the documents with the highest similarity value. The implicit assumption is that a cluster’s centroid emphasises important terms which are relevant to the event. For example a cluster describing the topic of some protesters giving flowers to policemen in Cairo would give higher weight to the terms "protesters", "flowers" and "policemen". Therefore documents with high similarity to these key terms are more likely to reveal key aspects of the event which is highly desired by the relevance and usefulness goals. Additionally, the quality criterion is satisfied since the centroid weights are based on frequency across all messages, and therefore they contain no typos or spelling mistakes (which can greatly affect the quality of a document). 
+
+\subsection{LexRank algorithm}
+[TODO explain LexRank]
+
+\subsection{Detecting named entities and locations in documents}
+The summaries produced by the algorithms described above are a good representation of the event and can help a human to understand the event. However, sometimes some additional
+information is needed to comprehend an event. In Chapter \ref{chap:Introduction} we described an event as a collection of attributes such as keywords, geographic location and entities involved. Therefore, we wish to be able to automatically extract these attributes for an event and included them in the summary of an event. The keywords describing the event are simply the words having the highests weight in an event cluster and can extracted very easily. For the named entities and locations we have to use a technique called named entity extraction which is part of the NLP algorithms. The method takes as input a piece of text and locates and classifies atomic elements in text into diffeent categories such as the names of persons, organisations and locations.
 
 
 \section{Twitter user classification}
 
+
 \subsection{Decision trees}
+Decision Tree learning is a method for approximating discrete classiffication functions using a tree-based representation. We can make use of this method to inductively infer [Mit97] unknown relations within our dataset. The trees can also be represented as sets of if-then rules, making the transition to an ILP setting almost seamless. A learned decision tree is able to classify a new instance by sorting it down the tree, beginning from the root to some leaf node which is able to classify the new instance. Every node in the tree tests some attribute value of each new instance, and the branches of each node represent a possible value for that attribute.
 
 \subsection{Neural networks}
 
