@@ -1,22 +1,26 @@
-\chapter{Developing a proof-of-concept event detection web application}\label{chap:Application}
+\chapter{Design and implementation}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
     \graphicspath{{Chapter3/Chapter3Figs/EPS/}{Chapter3/Chapter3Figs/}}
 \fi
 
-\section{Motivation}
+\section{System Overview}
 Why did we created this web application?
 
-\section{System architecture}
+\section{Data Retrieval and Preprocessing}
 
-Explain briefly in several subsections the individual components of the GUI tool
-such as how do we retrieve data (Topsy API), what framework are we using (Tornado)
-and how we produce the visualizations (d3.js)
+\section{Clustering}
 
-\section{Graphical User Interface}
+\section{Identifying events}
 
-Explain and show screenshots from the prototypical application.
+\section{Generating automatic summaries}
+
+\section{Classifying users}
+
+\section{Optimisations}
+
+\section{Developing a proof-of-concept web application}
 
 \section{Summary}
 

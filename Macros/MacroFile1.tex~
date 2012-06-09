@@ -25,7 +25,8 @@
   \end{figure}
 }
 
-\newcommand{\norm}[1]{\left|\left|#1\right|\right|}
+\newcommand{\norm}[1]{\lVert#1\rVert}
+
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "~/Documents/LaTeX/CUEDThesisPSnPDF/thesis"
