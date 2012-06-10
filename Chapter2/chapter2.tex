@@ -1,41 +1,25 @@
-\chapter{A data mining framework for automatic event detection and summarisation}
+\chapter{A data mining framework for automatic event detection and summarisation}\label{TheoreticalFramework}
 \ifpdf
     \graphicspath{{Chapter2/Chapter2Figs/PNG/}{Chapter2/Chapter2Figs/PDF/}{Chapter2/Chapter2Figs/}}
 \else
     \graphicspath{{Chapter2/Chapter2Figs/EPS/}{Chapter2/Chapter2Figs/}}
 \fi
 
-In this chapter we will define a theoretical framework for construction of a 
+In this chapter, we will define a theoretical framework for construction of a 
 data mining system which can extract events from Twitter data. The system comprises of a number
 of individual components which when combined together construct a complete framework for 
 event extraction. These components are explained in detail in the sections below and in 
-Chapter \ref{chap:Application} we discuss the concrete implementation of this framework as 
+Chapter \ref{chap:DesignAndImplementation} we discuss the concrete implementation of this framework as 
 well as the development of a proof-of-concept application using this framework.\\
-The first section of this chapter introduces the motivating work for the implementation of the system
-and we take a closer look at the concepts and key ideas that are necessary to understand the process we employ.
+The sections of this chapter introduce the motivating work for the implementation of the system
+and we also take a closer look at the concepts and key ideas that are necessary to understand the process we employ.
 
 \section{Methodology overview}\label{MethodologyOverview}
-The main idea behind our methodology for event detction is that similar events will be described by tweets having similar
-content. Therefore, the main task in our methodology is to cluster the tweets in different groups. Having done that
-we can then further investigate these clusters and identify which ones are events and also extract useful information from them.
-This procedure is described in detail in the rest of this chapter and Figure 3.1 depicts an overview of the system. 
-Initially, historical tweets from a service provider (Twitter API or another provider) should be retrieved and stored in an 
-appropriate format in the database. Subsequently, the system receives a stream of tweets from the database and process and 
-transforms them in a format that is appropriate for clustering. The next step in the pipeline is the actual clustering of the tweets 
-in order to detect groups of tweets discussing the same topic. Then, the extracted clusters are processed in order to identify the events 
-and generate their summaries. Finally, a visual representation of the results should be generated in order to aid understanding of the events.\\
-
-In our discussion in this chapter we will leave out the data retrieval aspect since it is dependent on the actual implementation and it 
-will be described in detail in Chapter \ref{chap:Application}. For now we'll assume that we have a source of tweets,such as the Twitter API which provides 
-us a collection of historical tweets. 
-
-\begin{figure}[!htbp]
-  \begin{center}
-    \includegraphics[height=3in, width=6in]{system-overview}
-    \caption{System overview - The event extraction system comprises of several independent components.}
-    \label{SystemOverview}
-  \end{center}
-\end{figure}
+The main idea behind our methodology for event detction is the hypothesis that similar events will be described by tweets having similar
+content. Therefore, the main task in our methodology is to cluster the tweets in different groups. We further hypothesise that not all of the detected
+clusters will describe real events, since clustering will detect topics such as discussions about celebrities or politicians which cannot be thought as events
+accortding to our definition of an event. Having idientified some events we can then further investigate these clusters extract useful information from them which 
+will serve as the event summary. The theoretical foundations of this procedure and its sub-components are described in detail in the rest of this chapter.  
 
 \section{Raw data processing}\label{RawDataProcessing}
 Mining and analysing text corpora are two well studied problems but in our case we face a slightly
@@ -337,7 +321,7 @@ Figure 3.6 illustrates a simple decision tree, which classifies a day's weather 
 \end{figure} 
 
 \subsection{Neural networks}
-[TODO explain LexRank]
+[TODO explain Neural Nets]
 
 \section{Summary}
 

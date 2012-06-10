@@ -173,7 +173,38 @@ a sorted list of the most relevant documents.
 TODO: Discusss feature selection methods used in our system.
 
 \subsection{Distance measures}
-TODO: Describe the three main measures we use
+In data mining applications including clustering we must decide whether two objects are similar or dissimilar. In document clustering we wish to 
+assess how similar are two documents in comparison to one another. Based on the similarity between two objects we can make the decision whether to
+group them in the same cluster or not. In this section we present three commonly used similarity measures which will be used throughout our work. 
+
+\subsubsection{Euclidean distance}
+Euclidean distance is probably the most popular distance measure and can be thought as the straight line connecting the two data points that we try to compare.
+Let the two data points be $i = (x_{i,1}, x_{i,2},...,x_{i,p})$ and $j = (x_{j,1}, x_{j,2},...,x_{j,p})$ where $p$ is the number of the numeric attributes. The Euclidean distance between $i$ and $j$ can then be defined as:\\
+\begin{eqnarray}
+d(i,j) = \sqrt{(x_{i,1} - x_{j,1})^2 + (x_{i,2} - x_{j,2})^2 + ... +(x_{i,p} - x_{j,p})^2 }
+\end{eqnarray} 
+
+Euclidean distance is the default distance measure used with the k-Means algorithm. 
+
+\subsubsection{Cosine similarity}
+The similarity of two documents which are represented as term vectors, corresponds to the correlation between the vectors. This is calculated as the cosine of the
+angle between vectors, the so-called cosine similarity. Cosine similarity is widely used for text documents and especially in clustering documents. Let $x$ and $y$ be 
+two vectors for comparison. Cosine similarity is defined as:
+
+\begin{eqnarray}
+sim(x,y) = \frac{x \cdot y }{\norm{x} \norm{y}} 
+\end{eqnarray} 
+
+where $\norm{a}$ is the Euclidean norm of vector $a$. This measure computes the cosine of the angle between the vectors x and y with a cosine value of $0$ meaning that the two vectors are at 90 degrees to each otther and therefore are not a match. If the cosine value is $1$ then the two vectors are identical and they are a perfect match. 
+
+\subsubsection{Jaccard coefficient}
+The Jaccard coeﬃcient measures similarity as the intersection divided by the union of the objects. For text document, the Jaccard coeﬃcient compares the sum weight of shared terms to the sum weight of terms that are present in either of the two document but are not the shared terms.
+
+\begin{eqnarray}
+sim(i,j) = \frac{q}{q + r + s}  
+\end{eqnarray} 
+where $q$ is the number of variables that are positive for both objects, $r$ is the number of variables that positive for $i$ and negative for $j$ and $s$ is the  number of variables that are positive for the $j$ and negative for $i$.
+
 
 \subsection{Clustering methods}
 There are many clustering algorithms and usually the belong to one of the following categories, as they are described in [put reference to the book]:
@@ -266,23 +297,47 @@ The term 'helpful' is vague and therefore we have defined three criteria, descri
 
 \subsection{Generating automatic document cluster summaries}
 In general, in automatic text summarisation we are interested in generating a shortened version of a large corpus or document but maintaining the integrity and meaning of 
-the original text. In our case the task is to reduce a large set of tweets in a smaller subset by ranking the individual tweets in a subset and selecting the top ranking ones.
-In our project we consider two methods, the centroid-based summarisation and the LexRank algorithm.
-   
+the original text. There are to variations of the automatic text summarisation: the extractive summarisation method which produces summaries by choosing a subset of the sentences
+in the original document or documents and abstractive summarisation, where the information in the text is rephrased.\\\\
+In our case the task is to reduce a large set of tweets in a smaller subset by ranking the individual tweets in a subset and selecting the top ranking ones.
+In our project we consider two methods extractive summarisation methods, the centroid-based summarisation and the LexRank algorithm.
+
 \subsubsection{Centroid-based summarisation}
 The centroid similarity approach computes the similarity of each message to its associated event cluster centroid. The cluster centroid is calculated by averaging the weight across all the document TF-IDF weigthed term-frequency vectors in a specific event. The method then selects the documents with the highest similarity value. The implicit assumption is that a cluster’s centroid emphasises important terms which are relevant to the event. For example a cluster describing the topic of some protesters giving flowers to policemen in Cairo would give higher weight to the terms "protesters", "flowers" and "policemen". Therefore documents with high similarity to these key terms are more likely to reveal key aspects of the event which is highly desired by the relevance and usefulness goals. Additionally, the quality criterion is satisfied since the centroid weights are based on frequency across all messages, and therefore they contain no typos or spelling mistakes (which can greatly affect the quality of a document). 
 
 \subsection{LexRank algorithm}
+[TODO explain LexRank]
 
-
-\subsection{Detecting sentiment, named entities and locations in documents}
+\subsection{Detecting named entities and locations in documents}
+The summaries produced by the algorithms described above are a good representation of the event and can help a human to understand the event. However, sometimes some additional
+information is needed to comprehend an event. In Chapter \ref{chap:Introduction} we described an event as a collection of attributes such as keywords, geographic location and entities involved. Therefore, we wish to be able to automatically extract these attributes for an event and included them in the summary of an event. The keywords describing the event are simply the words having the highests weight in an event cluster and can extracted very easily. For the named entities and locations we have to use a technique called named entity extraction which is part of the NLP algorithms. The method takes as input a piece of text and locates and classifies atomic elements in text into diffeent categories such as the names of persons, organisations and locations.
 
 
 \section{Twitter user classification}
+Different types of users interact and disseminate information daily on Twitter. Depending on the type of user we expect the content of a tweet to vary and consequently the quality of a tweet will vary too. For example renowned journalists are more likely to produce high quality tweets which easily be trusted as a reliable source of information. On the other hand tweets generated by a tweet bot might be considered unreliable since bots are known to release rumors. Therefore, it is crucial to be able to distinguish different types of users in order to ensure that we will extract high quality events that provide useful information and not just rumors. Additionally, it is interesting in its own right to investigate what is the distribution of the users tweeting for an event. For example, we would like to find out whether activists can start and sustain an event discussion online or whether celebrities or political figures can spark the interest of other Twitter users. In order to do that we need to find a way to classify users.\\\\ 
+Classification is the process of finding a model that describes and classifies data classes. The model is derived based on a set of training data (data objects which their class labels are known). Then the derived model is used to predict the class of an uknown instance which is presented to the learning system.    
 
 \subsection{Decision trees}
+Decision Tree learning is a method for approximating discrete classiffication functions using a tree-based representation. We can make use of this method to inductively infer [put ref here] unknown relations within our dataset. A nice property of the decision trees is that they can also be represented as a set of if-then rules, therefore the task of interpreting them is an easy task for a human. A learned decision tree is able to classify a new instance by sorting it down the tree to the appropriate leaf node, then returning the classification associated with this leaf. Every node in the tree tests some attribute value of each new instance, and the branches of each node represent a possible value for that attribute.\\\\
+Figure 3.6 illustrates a simple decision tree, which classifies a day's weather conditions according to wether they are suitable for playing tennis [put ref to mitchell's book]. If the decision tree is presented with an example of a day when the outlook is sunny, the temperature is hot, the humidity is high and the wind is strong then this example would be sorted down the leftmost branch and therefore would be classified as negative, i.e, this day is not suitable for playing tennis. Alternatively, the tree could be represented as if-then rules:\\  
+
+
+\begin{center}
+  (Outlook = Sunny $\wedge$ Humidity = Normal)\\
+  $\vee$ (Outlook = Overcast)\\
+  $\vee$ (Outlook = Rain $\wedge$ Wind = Weak)
+\end{center}
+
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=2in, width=4in]{decision-tree-example}
+    \caption{A simple decision tree.}
+    \label{DecisionTreeExample}
+  \end{center}
+\end{figure} 
 
 \subsection{Neural networks}
+[TODO explain Neural Nets]
 
 \section{Summary}
 

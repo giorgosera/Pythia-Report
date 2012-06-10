@@ -8,7 +8,11 @@
 \section{System Overview}
 Why did we created this web application?
 
+\section{Tools}
+Broef description of the main tools used (Python, NLTK, Orange etc) 
+
 \section{Data Retrieval and Preprocessing}
+
 
 \section{Clustering}
 
