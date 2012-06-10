@@ -281,7 +281,7 @@ In our project we consider two methods extractive summarisation methods, the cen
 \subsubsection{Centroid-based summarisation}
 The centroid similarity approach computes the similarity of each message to its associated event cluster centroid. The cluster centroid is calculated by averaging the weight across all the document TF-IDF weigthed term-frequency vectors in a specific event. The method then selects the documents with the highest similarity value. The implicit assumption is that a cluster’s centroid emphasises important terms which are relevant to the event. For example a cluster describing the topic of some protesters giving flowers to policemen in Cairo would give higher weight to the terms "protesters", "flowers" and "policemen". Therefore documents with high similarity to these key terms are more likely to reveal key aspects of the event which is highly desired by the relevance and usefulness goals. Additionally, the quality criterion is satisfied since the centroid weights are based on frequency across all messages, and therefore they contain no typos or spelling mistakes (which can greatly affect the quality of a document). 
 
-\subsection{LexRank algorithm}
+\subsubsection{LexRank algorithm}
 [TODO explain LexRank]
 
 \subsection{Detecting named entities and locations in documents}

@@ -54,7 +54,9 @@
 \DeclareCaptionFormat{listing}{%
   \parbox{\textwidth}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}\vskip-4pt}}
 \captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
-\lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep}
+\definecolor{comments}{RGB}{60,179,113}
+\definecolor{keywords}{RGB}{255,0,90}
+\lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep, keywordstyle=\color{keywords}, commentstyle=\color{comments}}
 
 % Comment out the next line to get single spacing
 \onehalfspacing

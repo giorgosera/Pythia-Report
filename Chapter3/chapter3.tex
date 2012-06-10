@@ -74,9 +74,76 @@ can remove documents/tweets which contain keywords that appear too often or less
  
 \section{Clustering}
 
-\begin{lstlisting}[language=Python, label=AbstractClustererSnippet, caption=AbstractClusterer]
-for word in words:
-  print word
+So far we have managed to retrieve and store historical tweets in our database. The next module in our pipeline is to perform clustering on the tweets and identify clusters which discuss the same topic. The clustering module (Figure \ref{ClusteringOverview}) is responsible to construct the term-frequency vectors by processing the dataset and subsequently to apply a clustering algorithm on the dataset. 
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=1.5in, width=4in]{clustering-overview}
+    \caption{The cluster analysis module - The dataset is processed to construct the term-frequency vectors and then a clustering algorithm is used to identify the clusters.}
+    \label{ClusteringOverview}
+  \end{center}
+\end{figure} 
+
+There are several candidates algorithms for clustering documents and we have decided to implement four of them. The theoretical background of these algorithms is outlined in Chapter \ref{TheoreticalFramework} and in Chapter \ref{Evaluation} we present a thorough comparison of these algorithms with respect to their performance in clustering tweets.  
+In the next section we provide our implementation of these algorithms and the components that are needed for clustering. 
+
+\subsection{AbstractClusterer and the derived clusterers}
+The four different algorithms presented in this section are the k-Means, DBSCAN, non-negative matrix factorisation and online clusterers. Although these methods are fundamentally different they share some common functionality. For example the pre-processing steps, such as the construction of the term-frequency vectors is identical for all of them. Also, all of the algorithms output the clusters using the same format and therefore the methods for visualising the clusters will be identical. The architecture of the software components responsible for implementing the clustering functionality tries to incorporate this common functionality as well as accomodating the different core implementation of each algorithm. The UML diagram below illustrates the different components of the clustering module. The AbstractClusterer class implements all the common functionalities such as add\_document, construct\_term\_doc\_matrix, plot\_scatter and dump\_clusters\_to\_file. Since each algorithm uses a different method to perform the actual clustering task, the AbstractClusterer class do not provide any implementation for the "run" function. This is the responsibility of each derived clusterer. 
+
+[TODO: put UML]     
+
+The main functionality of the AbstractClusterer is to construct the term-frequency vector for each document and consequently the term-frequency matrix $a$ which has a row for each document and a column for each distinct term in the dataset. This will convert the corpus in the vector space representation. Listing \ref{AbstractClustererSnippet} shows the pseudocode for implementing the construct\_term\_doc\_matrix function. We retrieve the dataset from the database and we find all the distinct terms that occur across all the documents. Then the term-frequency matrix is initialised and we iterate over the documents filling in the elements of the matrix with the TF-IDF weight of each term. The function returns the matrix $a$.
+
+\begin{lstlisting}[language=Python, label=AbstractClustererSnippet, caption=Pseudocode for constructing the term-frequency matrix for a dataset]
+def construct_term_doc_matrix():
+  corpus = get_dataset_from_database()
+  terms = find_distinct_terms(corpus)
+  a = initialise_term_frequency_matrix(rows=len(corpus), 
+                                        columns=len(terms))
+  
+  for i, document in enumerate(corpus):
+    for term in document
+      a[i][term] = tf_idf(term, document, corpus)
+    
+  return a 
+\end{lstlisting}
+
+In the next pages we discuss the implementation of the concrete clusterers and we show some preliminary results of the clustering process.
+
+\textbf{k-Means}
+Listing \ref{AbstractClustererSnippet} shows the pseudocode for k-Means clustering algorithm. The algorithm works by randomly initialising k centroids and then finding out which document vectors are closest to the centroid. Then the centroid is recomputed based on the mean of the vectors belonging to this centroid and this mean value becomes the new centroid. An additional check is performed again to ensure that all the vectors are still belonging to that cluster after the recomputation of the centroid. This procedure is repeated until there are previous cluster membership has not changed. 
+
+\begin{lstlisting}[language=Python, label=KmeansClustererSnippet, caption=Pseudocode for k-Means algorithm]
+def run(k, document_vectors):
+  '''
+  Inputs: 
+  k --> the number of clusters
+  examples-->the set of n document vectors I={i1,i2,..,in}
+  
+  Outputs:
+  C --> cluster centroids {c1, c2, ..., ck}
+  m: I --> C the cluster membership
+  '''
+  C = random_centroid_initialisation()
+  
+  distances = []
+  for vector in document_vectors
+    for c in C:
+      dist = distance(c, vector)
+      distances.append(dist)
+    m[vector] = min(distances)
+
+  while has_changed(m):
+    for c in C:
+      c = recompute_centroid(c, vectors_of(c))   
+    
+    for vector in document_vectors
+      for c in C:
+        dist = distance(c, vector)  
+        distances.append(dist)
+      m[vector] = min(distances)
+  return C, m
+
 \end{lstlisting}
 
 \section{Identifying events}
