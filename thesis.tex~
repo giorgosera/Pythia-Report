@@ -1,5 +1,5 @@
 %input macros (i.e. write your own macros file called MacroFile1.tex)
-%\include{Macros/MacroFile1}
+\include{Macros/MacroFile1}
 
  \documentclass[oneside,12pt]{Classes/CUEDthesisPSnPDF}
 

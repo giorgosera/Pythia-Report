@@ -21,20 +21,12 @@ clusters will describe real events, since clustering will detect topics such as 
 accortding to our definition of an event. Having idientified some events we can then further investigate these clusters extract useful information from them which 
 will serve as the event summary. The theoretical foundations of this procedure and its sub-components are described in detail in the rest of this chapter.  
 
-\section{Raw data processing}\label{RawDataProcessing}
+\section{Raw text processing}\label{RawDataProcessing}
 Mining and analysing text corpora are two well studied problems but in our case we face a slightly
 different problem. Social media content and especially tweets are very short (140 characters)
 and usually contain slang phrases, abbreviations and irrelevant information. Therefore, is of
 foremost importance to ensure that clever data preprocessing takes place in order to help us in
-the subsequent tasks. 
-
-\begin{figure}[!htbp]
-  \begin{center}
-    \includegraphics[height=1.5in, width=6in]{raw-data-processing}
-    \caption{The raw data processing module - All the steps neccessary to convert raw documents to a format suitable for storage in a database.}
-    \label{RawDataProcessingOverview}
-  \end{center}
-\end{figure} 
+the subsequent tasks. Below we describe the main steps we must follow to pre-process our raw text tweets. 
 
 \subsection{Natural language processing}
 

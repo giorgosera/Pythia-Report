@@ -1,18 +1,52 @@
-\chapter{Design and implementation}
+\chapter{Design and implementation}\label{DesignAndImplementation}
 \ifpdf
     \graphicspath{{Chapter3/Chapter3Figs/PNG/}{Chapter3/Chapter3Figs/PDF/}{Chapter3/Chapter3Figs/}}
 \else
     \graphicspath{{Chapter3/Chapter3Figs/EPS/}{Chapter3/Chapter3Figs/}}
 \fi
 
+The aim of this chapter is to give a thorough description of our concrete implementation of the theoretical framework introduced
+in Chapter \ref{TheoreticalFramework}. We list and provide an explanation of the individual
+components and also explain our reasoning for certain design choices. In section \ref{WebApp} we present a proof-of-concept web application that 
+we have developed in order to demonstrate how the different components can be integrated together to form a platform for event detection. 
+
 \section{System Overview}
-Why did we created this web application?
+Figure \ref{SystemOverview} shows an overview of the system architecture which is a pipeline of the individual components we described
+in Chapter \ref{TheoreticalFramework}. Each one of these components is depicted as an independent module in the figure.  
+Initially, historical tweets from a service provider (Twitter API or another provider) are retrieved and stored in an 
+appropriate format in the database. Subsequently, the system receives a stream of tweets from the database and processess and 
+transforms them in a format that is appropriate for clustering. The next step in the pipeline is the actual clustering of the tweets 
+in order to detect groups of tweets discussing the same topic. Then, the extracted clusters are processed in order to identify the events 
+and generate their summaries. Finally, a visual representation of the results should be generated in order to aid understanding of the events.\\
 
-\section{Tools}
-Broef description of the main tools used (Python, NLTK, Orange etc) 
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=3in, width=6in]{system-overview}
+    \caption{System overview - The event extraction system comprises of several independent components.}
+    \label{SystemOverview}
+  \end{center}
+\end{figure}
 
-\section{Data Retrieval and Preprocessing}
+\subsection{Tools}
+In the process of implementing the system we have mainly used our implementation of the algorithms but several third-party 
+software libraries were used to implement the sub-components of the system. Here we describe the main tools we have used.\\ 
+TODO: explain the tools
 
+\section{Data Retrieval}
+The first module 
+Twitter provides its own API to retrieve tweets, user profiles and several metadata related to Twitter. They also provide a streaming API which is commonly used to collect tweets in real time. However, the main problem with the Twitter API is that it has a very restrictive limit policy (150 requests per hour) and it does not provide access to tweets posted more than a few days ago. This is a problem for our project since we require access to historical data. The solution is to use other archiving services and there are numerous possibilities. However, it is essential for us to have direct access to their database through an API and unfortunatelly, most of them do not provide an API. We have found that Topsy \footnote{http://topsy.com/} provides an excellent API \footnote{http://code.google.com/p/otterapi/} and direct access to tweets from 2009 up to the present day. Additionally, Topsy API is free and the limit policy allows us to retrieve our data easily. Therefore, we have decided to use Topsy Otter API with its Python bindings.
+
+\section{Raw text processing}
+
+
+
+\begin{figure}[!htbp]
+  \begin{center}
+    \includegraphics[height=1.5in, width=6in]{raw-data-processing}
+    \caption{The raw data processing module - All the steps neccessary to convert raw documents to a format suitable for storage in a database.}
+    \label{RawTextProcessingOverview}
+  \end{center}
+\end{figure} 
 
 \section{Clustering}
 
@@ -24,7 +58,7 @@ Broef description of the main tools used (Python, NLTK, Orange etc)
 
 \section{Optimisations}
 
-\section{Developing a proof-of-concept web application}
+\section{Developing a proof-of-concept web application}\label{WebApp}
 
 \section{Summary}
 
