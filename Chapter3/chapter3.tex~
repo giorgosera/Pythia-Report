@@ -88,15 +88,29 @@ There are several candidates algorithms for clustering documents and we have dec
 In the next section we provide our implementation of these algorithms and the components that are needed for clustering. 
 
 \subsection{AbstractClusterer and the derived clusterers}
-The four different algorithms presented in this section are the k-Means, DBSCAN, non-negative matrix factorisation and online clusterers. Although these methods are fundamentally different they share some common functionality. For example the pre-processing steps, such as the construction of the term-frequency vectors is identical for all of them. Also, all of the algorithms output the clusters using the same format and therefore the methods for visualising the clusters will be identical. The architecture of the software components responsible for implementing the clustering functionality tries to incorporate this common functionality as well as accomodating the different core implementation of each algorithm. The UML diagram below illustrates the different components of the clustering module. The AbstractClusterer class implements all the common functionalities such as add\_document, construct\_term\_doc\_matrix, plot\_scatter and dump\_clusters\_to\_file. Since each algorithm uses a different method to perform the actual clustering task, the AbstractClusterer class do not provide any implementation for the "run" function. This is the responsibility of each derived clusterer. 
+The four different algorithms presented in this section are the k-Means, DBSCAN, non-negative matrix factorisation and online clusterers. Although these methods are fundamentally different they share some common functionality. For example the pre-processing steps, such as the construction of the term-frequency vectors is identical for all of them. Also, all of the algorithms output the clusters using the same format and therefore the methods for visualising the clusters will be identical. The architecture of the software components responsible for implementing the clustering functionality tries to incorporate this common functionality as well as accomodating the different core implementation of each algorithm. The UML diagram (Figure \ref{UMLClusterers}) below illustrates the different components of the clustering module. The AbstractClusterer class implements all the common functionalities such as add\_document, construct\_term\_freq\_matrix, plot\_scatter and dump\_clusters\_to\_file. Since each algorithm uses a different method to perform the actual clustering task, the AbstractClusterer class do not provide any implementation for the "run" function. This is the responsibility of each derived clusterer. 
 
-[TODO: put UML]     
-
-The main functionality of the AbstractClusterer is to construct the term-frequency vector for each document and consequently the term-frequency matrix $a$ which has a row for each document and a column for each distinct term in the dataset. This will convert the corpus in the vector space representation. Listing \ref{AbstractClustererSnippet} shows the pseudocode for implementing the construct\_term\_doc\_matrix function. We retrieve the dataset from the database and we find all the distinct terms that occur across all the documents. Then the term-frequency matrix is initialised and we iterate over the documents filling in the elements of the matrix with the TF-IDF weight of each term. The function returns the matrix $a$.
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=2.0in, width=6in]{clusterers-uml}
+    \caption{The four derived clusterers share common functionality which is implemented in the AbstractClusterer class. }
+    \label{UMLClusterers}
+  \end{center}
+\end{figure}    
+ 
+The main functionality of the AbstractClusterer is to construct the term-frequency vector for each document and consequently the term-frequency matrix $a$ which has a row for each document and a column for each distinct term in the dataset. This will convert the corpus in the vector space representation. Listing \ref{AbstractClustererSnippet} shows the pseudocode for implementing the construct\_term\_freq\_matrix function. We retrieve the dataset from the database and we find all the distinct terms that occur across all the documents. Then the term-frequency matrix is initialised and we iterate over the documents filling in the elements of the matrix with the TF-IDF weight of each term. The function returns the matrix $a$.
 
 \begin{lstlisting}[language=Python, label=AbstractClustererSnippet, caption=Pseudocode for constructing the term-frequency matrix for a dataset]
-def construct_term_doc_matrix():
-  corpus = get_dataset_from_database()
+def construct_term_freq_matrix(corpus):
+  '''
+  Inputs: 
+  corpus: The collections of documents we will cluster
+  
+  Outputs:
+  a: A nxm matrix where n is the number of documents 
+     in the corpus and m the number of distinct terms
+     in the corpus.  
+  '''
   terms = find_distinct_terms(corpus)
   a = initialise_term_frequency_matrix(rows=len(corpus), 
                                         columns=len(terms))
@@ -108,20 +122,20 @@ def construct_term_doc_matrix():
   return a 
 \end{lstlisting}
 
-In the next pages we discuss the implementation of the concrete clusterers and we show some preliminary results of the clustering process.
+In the next pages we discuss the implementation of the concrete clusterers and we show some preliminary results of the clustering process.\\
 
-\textbf{k-Means}
-Listing \ref{AbstractClustererSnippet} shows the pseudocode for k-Means clustering algorithm. The algorithm works by randomly initialising k centroids and then finding out which document vectors are closest to the centroid. Then the centroid is recomputed based on the mean of the vectors belonging to this centroid and this mean value becomes the new centroid. An additional check is performed again to ensure that all the vectors are still belonging to that cluster after the recomputation of the centroid. This procedure is repeated until there are previous cluster membership has not changed. 
+\textbf{k-Means:} Listing \ref{KmeansClustererSnippet} shows the pseudocode for k-Means clustering algorithm. The algorithm works by randomly initialising k centroids and then finding out which document vectors are closest to the centroid. Then the centroid is recomputed based on the mean of the vectors belonging to this centroid and this mean value becomes the new centroid. An additional check is performed again to ensure that all the vectors are still belonging to that cluster after the recomputation of the centroid. This procedure is repeated until there are previous cluster membership has not changed. Note that the distance() function can be any of the three distance measures described in the previous chapter.
 
 \begin{lstlisting}[language=Python, label=KmeansClustererSnippet, caption=Pseudocode for k-Means algorithm]
 def run(k, document_vectors):
   '''
   Inputs: 
-  k --> the number of clusters
-  examples-->the set of n document vectors I={i1,i2,..,in}
+  k: the number of clusters
+  document_vectots: the set of n document 
+                     vectors I={i1,i2,..,in}
   
   Outputs:
-  C --> cluster centroids {c1, c2, ..., ck}
+  C: cluster centroids {c1, c2, ..., ck}
   m: I --> C the cluster membership
   '''
   C = random_centroid_initialisation()
@@ -145,6 +159,97 @@ def run(k, document_vectors):
   return C, m
 
 \end{lstlisting}
+\vspace{10 mm}
+\textbf{DBSCAN:} Listing \ref{DbscanClustererSnippet} shows the pseudocode for the DBSCAN clustering algorithm. Initially,
+all documents are marked as unvistied and the cluster list is empty. Then the algorithm randomly selects a new document vector, marks it
+as visited and finds all its neighbors than are within a distance eps. The set of neighbors is called ε-neighborhood and we denote it here by N. In order to calculate the distance we use one of the three predefined distance measures. If N does not contain at least min\_pts then we mark this vector as a noise point. Otherwise, a new cluster is created which contains this vector and all the objects in N are added to a candidate set. DBSCAN iteratively adds to the new cluster those documents in the N that do not belong to any cluster. For any object in the ε-neighborhood DBSCSAN checks again its own ε-neighborhood N' and if it has at least min\_pts those document vectors are added to the N. This continues, with DBSCAN adding new documents in the new cluster, until N is empty. Finally, to find the next cluster DBSCAN selects a new unvisited document vector and continues the same process until all vectors have been visited.  
+
+\begin{lstlisting}[language=Python, label=DbscanClustererSnippet, caption=Pseudocode for DBSCAN algorithm]
+def run(min_points, eps, document_vectors):
+  '''
+  Inputs: 
+  eps: the radius parameter
+  min_pts: the neighborhood density threshold.
+  document_vectors: the set of n document vectors 
+                     I={i1,i2,..,in}
+  
+  Outputs:
+  C: the clusters and the document vectors 
+     belonging to them
+  '''
+  C = [] #The cluster list
+  mark_all_vectors_as_unvisited(document_vectors)
+  
+  while not all_is_visited(document_vectors):  
+    vector = pick_random(document_vectors)
+    mark_as_visited(vector)
+    neighbors = get_neighbors(document_vectors, vector)
+    if len(neighbors) >= eps:
+      new_cluster = create_cluster(vector) 
+      C.append(new_cluster)
+      for n_vector in neighbors:
+        if not is_visited(n_vector) 
+          mark_as_visited(n_vector)
+          n_neighbors=get_neighbors(document_vectors,n_vector)
+          if len(n_neighbors) >= eps:
+            neighbors.append(n_neighbors)
+        if not_in_cluster(n_vector):
+          new_cluster.add(n_vector)
+    else:
+      mark_as_noise(vector) 
+  return C
+\end{lstlisting}
+\vspace{10 mm}
+\textbf{Non-negative matrix factorisation:} Our implementation is based for NMF is based on the paper [put ref here for Learning the parts of objects by nonnegative matrix factorization]. The method accepts as input the term-frequency matrix $V$ the number of basis vectors to generate $r$ and the number of optimisation iterations. The algorithm starts from non-negative initialisations for W and H and then iteratively updates W and H until a factorisation $V \approx WH$ such that $| V - WH |$ is minimal. If the number of maximum iterations has not been reached and the error did not change since the last iteration then the algorithm halts and return W and H. Listing \ref{NmfClustererSnippet} shows the pseudocode for the NMF algorithm. The notation $A.T$ indicates that we shoud take the transpose of the matrix $A$.
+  
+\begin{lstlisting}[language=Python, label=NmfClustererSnippet, caption=Pseudocode for the NMF algorithm]
+def run(V, r, iterations):
+  '''
+  Inputs: 
+  V: the matrix to factorize
+  r: number of basis vectors to generate
+  iterations: number of optimisation
+             iterations to perform
+  
+  Outputs:
+  W: a set of r basis vectors
+  H: represenations of the columns of V in 
+     the basis given by W
+  '''
+  
+  C = size(V,1) #dimensionality of examples (# rows)
+  N = size(V,2) #number of examples (columns)
+
+  W = rand(N,r);
+  H = rand(r,C);
+  
+  previous_error = 0
+  error = 0
+  for i in xrange(iterations):
+
+    #Update W
+    W2 = dot(dot(W, H), H.T) + 10**-9
+    W *= dot(V[:,:], H.T)
+    W /= W2
+    
+    #Update H
+    H2 = dot(dot(W.T, W), H) + 10**-9
+    H *= dot(W.T, V[:,:])
+    H /= H2                                     
+    
+    previous_error = error
+    error = sqrt( sum((V[:,:] - dot(W, H))**2 ))
+    
+    if i > 1 and error:
+      if previous_error == error:
+        break
+  return W, H
+  
+\end{lstlisting}
+
+\textbf{Online:} The rest of the algorithms operate on the dataset as a whole. Since we are interested in clustering a vast amount of documents these approaches are expensive. However, we can use a category of clustering algorithms called sequential or online clustering methods. The main difference is that they cluster each individual example sequentially by updating the clusters once this specific example is presented to the system. Therefore  
+
+
 
 \section{Identifying events}
 
