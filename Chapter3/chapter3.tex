@@ -88,7 +88,7 @@ There are several candidates algorithms for clustering documents and we have dec
 In the next section we provide our implementation of these algorithms and the components that are needed for clustering. 
 
 \subsection{AbstractClusterer}
-The four different algorithms presented in this section are the k-Means, DBSCAN, non-negative matrix factorisation and online clusterers. Although these methods are fundamentally different they share some common functionality. For example the pre-processing steps, such as the construction of the term-frequency vectors is identical for all of them. Also, all of the algorithms output the clusters using the same format and therefore the methods for visualising the clusters will be identical. The architecture of the software components responsible for implementing the clustering functionality tries to incorporate this common functionality as well as accomodating the different core implementation of each algorithm. The UML diagram (Figure \ref{UMLClusterers}) below illustrates the different components of the clustering module. The AbstractClusterer class implements all the common functionalities such as add\_document, construct\_term\_freq\_matrix, plot\_scatter and dump\_clusters\_to\_file. Since each algorithm uses a different method to perform the actual clustering task, the AbstractClusterer class do not provide any implementation for the "run" function. This is the responsibility of each derived clusterer. 
+The four different algorithms presented in this section are the k-Means, DBSCAN, Non-negative Matrix Factorisation (NMF) and online clusterers. Although these methods are fundamentally different they share some common functionality. For example the pre-processing steps, such as the construction of the term-frequency vectors is identical for all of them. Also, all of the algorithms output the clusters using the same format and therefore the methods for visualising the clusters will be identical. The architecture of the software components responsible for implementing the clustering functionality tries to incorporate this common functionality as well as accomodating the different core implementation of each algorithm. The UML diagram (Figure \ref{UMLClusterers}) below illustrates the different components of the clustering module. The AbstractClusterer class implements all the common functionalities such as add\_document, construct\_term\_freq\_matrix, plot\_scatter and dump\_clusters\_to\_file. Since each algorithm uses a different method to perform the actual clustering task, the AbstractClusterer class do not provide any implementation for the "run" function. This is the responsibility of each derived clusterer. 
 
 \begin{figure}[htbp]
   \begin{center}
@@ -122,7 +122,7 @@ def construct_term_freq_matrix(corpus):
   return a 
 \end{lstlisting}
 
-In the next pages we discuss the implementation of the concrete clusterers and we show some preliminary results of the clustering process.\\
+In the next pages we discuss the implementation of the concrete clusterers which implement the second sub-component of the cluster analysis module. We also show some preliminary results of the clustering process.\\
 
 \subsection{k-Means clusterer}
 Listing \ref{KmeansClustererSnippet} shows the pseudocode for k-Means clustering algorithm. The algorithm works by randomly initialising k centroids and then finding out which document vectors are closest to the centroid. Then the centroid is recomputed based on the mean of the vectors belonging to this centroid and this mean value becomes the new centroid. An additional check is performed again to ensure that all the vectors are still belonging to that cluster after the recomputation of the centroid. This procedure is repeated until there are previous cluster membership has not changed. Note that the distance() function can be any of the three distance measures described in the previous chapter.
@@ -307,9 +307,22 @@ def merge_closest(clusters):
     
 \end{lstlisting}
 
+\subsection{Clustering results}
+[TODO: add screenshots from the clustering results]
+
 \section{Identifying events}
+[TODO: Complete this section]
 
 \section{Generating automatic summaries}
+So far we have managed to retrieve historical tweets from Twitter and identify clusters of topics that were discussed in them. After that we have filtered out the irrelevant clusters and kept the important ones which are considered as the events. Some of these events contain a lot of tweets and therefore it would be extremely tedious for a human observer to understand what happened during that event. Therefore, at this point we must implement our automatic summary generators. The main task here is to find the most important tweets, keywords and named entities. In the next sections we describe how we have implemented the functionality to extract this information. An overview of the summarisation module is shown in Figure \ref{SummarisationOverview}.  
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=3.0in, width=6in]{summarisation-overview}
+    \caption{The summarisation module receives the event clusters and outputs the highest ranked tweetsm keywords and entities in each cluster.}
+    \label{SummarisationOverview}
+  \end{center}
+\end{figure} 
 
 \section{Classifying users}
 
