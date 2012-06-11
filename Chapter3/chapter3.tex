@@ -255,7 +255,19 @@ Our implementation is illustrated in pseudocode in Listing \ref{OnlineClustererS
   \item Merge the two closest centroids, c1 and c2, which means that we are left with a redundant centroid c2.
   \item Set the redundant centroid equal to the document vector. 
 \end{enumerate}
-These three steps satisfy three important criteria. Firstly, the within-cluster variance is minimised by Step 1 and the between-cluster distance is maximised by Step 2. Finally we capture the changes in the data distribution after a new document is clustered by Step 3 since we are treating each new document as an indication to a potential new cluster. 
+These three steps satisfy three important criteria. Firstly, the within-cluster variance is minimised by Step 1 and the between-cluster distance is maximised by Step 2. Finally we capture the changes in the data distribution after a new document is clustered by Step 3 since we are treating each new document as an indication to a potential new cluster.\\\\
+In the algorithm there are two cases when we need to update the location and the size of an existing centroid. The first one is when a centroid is the closest to a new document and it must be moved closer to it. The location of the closest centroid, $c$, is updated according to the following update rule location:
+\begin{eqnarray}
+c_{center} \leftarrow c_{center} + \frac{d_{center} - c_{center}}{c_{size} + 1}    
+\end{eqnarray}  
+where $c_{center}$ is the centroid's location, $c_{size}$ is the number of documents this centroid represents and $d_{center}$ is the document that we are trying to get closer to. The size of a centroid is increased by one each time a new document is assigned to it. The second case for updating is when two clusters, $c_1$ and $c_2$ need to be merged. The update rules for the location and the size are then defined as:
+\begin{eqnarray}
+c1_{center} \leftarrow \frac{c1_{center} \times c1_{size} + c2_{center} \times c2_{size}}{c1_{size} + c2_{size}} \\
+\end{eqnarray}  
+\begin{eqnarray}
+c1_{size} \leftarrow c1_{size} + c2_{size} 
+\end{eqnarray}  
+
 
 \begin{lstlisting}[language=Python, label=OnlineClustererSnippet, caption=Pseudocode for the online clustering algorithm]
 def run(clusters, k_max, N, document):
@@ -324,11 +336,18 @@ So far we have managed to retrieve historical tweets from Twitter and identify c
   \end{center}
 \end{figure} 
 
-\section{Classifying users}
+\subsection{Ranking tweets}
+\subsubsection{Centroid-based summariser}
+\subsubsection{LexRank summariser}
 
-\section{Optimisations}
+\section{Classifying users}
+\subsection{Crawling user profiles}
+\subsection{AbstractClassifier}
+\subsection{IDE3Classifier}
+\subsection{NNClassifier}
 
 \section{Developing a proof-of-concept web application}\label{WebApp}
+\subsection{Optimisations}
 
 \section{Summary}
 
