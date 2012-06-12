@@ -287,14 +287,14 @@ assumes that sentences which are similar to many other sentences in a cluster in
 sentence that is the most similar to other sentences is the most topical. LexRank conceptualises sentences to be forming a graph which has the sentences as nodes and the edges indicate which sentences are similar (if the similarity is above a threshold we add an edge between two nodes). The sentence/node with the more edges has the higher centrality. Usually the cosine similarity measure is used for this purpose. Other methods such as degree centrality consider each edge as being an equal vote for centrality and therefore the most edges a node has the highest the centrality. However, LexRank takes a slightly less democratic approach by giving "prestigious" sentences more voting power. The higher the centrality of a node the more its vote counts. A way of formulating this idea is to distribute the centrality of a node to its neighbors. This can be formulated by:
 
 \begin{eqnarray}
-L(u) = \sum_{v \in adj[u}^{\infty}\frac{L(v)}{deg(v)}
+L(u) = \sum_{v \in adj[u]}^{\infty}\frac{L(v)}{deg(v)}
 \end{eqnarray} 
 where $L(u)$ is the centrality of node $u$, $adj[u]$ is the set of nodes adjacent to $u$, $deg(v)$ is the degree of node $v$.
 
 In order to ensure that a "random walker" is not stuck during a walk in the graph we need to introduce a damping factor $d$ which was first introduced by Page et al. (1998) in order to solve this problem. The equation for LexRank then becomes:
 
-\begin{eqnarray}
-L(u) = \frac{d}{N} + (1-d) \sum_{v \in adj[u}^{\infty}\frac{L(v)}{deg(v)}
+\begin{eqnarray}\label{LexRankEquation}
+L(u) = \frac{d}{N} + (1-d) \sum_{v \in adj[u]}^{\infty}\frac{L(v)}{deg(v)}
 \end{eqnarray} 
 where N is the total number of nodes in the graph. The above equation is called the LexRank equation and is deﬁned in a recursive manner, and can be computed via an iterative routine called the power method (the algorith is given in Chapter \ref{DesignAndImplementation}). This is essentially the same as the PageRank algorithm which is the backbone of the Google search engine with the only difference that the edges are undirected since the cosine similarity is a symmetric relation.
 

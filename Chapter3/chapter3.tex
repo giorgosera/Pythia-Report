@@ -378,9 +378,82 @@ def run(event_cluster):
 \end{lstlisting}
 
 \subsubsection{LexRank summariser}
-\subsection{Named entity extraction}
+As we have described in Chapter \ref{TheoreticalFramework} 
+LexRank is an algorithm where we deﬁne a graph that has nodes for the sentences to be summarised the 
+edges are placed between two sentences that are similar to each other. We can then rank all the sentences 
+based on the expected probability of a random walker visiting each sentence using equation \ref{LexRankEquation}. \\
+The main differentiation in our implementation to the usual LexRank algorithm is that we scale the probability of 
+jumping to the next node based on the cosine similarity of two nodes. The reason we do this is that we want to favor jumping to 
+a node that discuss a more similar topic. We can implement this alteration by scaling the summation in the equation by the cosine similarity 
+of the nodes $u$ and $v$. Since the similarity is in the range $[0, 1]$ an identical node it won't be discounted whereas a node with similarity equals 0 
+it will be ignored. The equation the becomes:
+
+\begin{eqnarray}\label{LexRankEquationModified}
+L(u) = \frac{d}{N} + (1-d) * sim(u, v) \sum_{v \in adj[u]}^{\infty}\frac{L(v)}{deg(v)}
+\end{eqnarray} 
+
+\begin{lstlisting}[language=Python, label=CentroidSummariserSnippet, caption=Pseudocode for the centoid-based summariser.]
+def run(event_cluster, threshold, tolerance):
+  '''
+  Inputs:
+  event_clusters: The cluster for which we want to rank 
+                  the tweets.
+  Outputs:
+  ranked: A list of ranked tweets in descending order. 
+  '''        
+
+  vectors = event_cluster.get_document_vectors()      
+  n = len(vectors)
+  adjacency_matrix,degree=calculate_similarities(vectors, 
+                                              threshold)
+  
+  for i in xrange(n):
+      for j in xrange(n):
+        adjacency_matrix[i][j] = adjacency_matrix[i][j] 
+                                            / degree[i]
+                                            
+  ranked = power_method(adjacency_matrix, tolerance)        
+  
+  return ranked
+    
+def power_method(self, m, epsilon):
+  n = len( m )
+  p = [1.0 / n] * n
+  while True:
+      new_p = [0] * n
+      for i in xrange( n ):
+          for j in xrange( n ):
+              new_p[i] += m[j][i] * p[j]
+      total = 0
+      for x in xrange( n ):
+          total += ( new_p[i] - p[i] ) ** 2
+      p = new_p
+      if total < epsilon:
+          break
+  return p  
+\end{lstlisting}
+
+\subsection{Named entity and keyword extraction}
+The other two parts of the summarisation module is the named entity and keyword extraction. The keyword extraction task is straightforward since we mereley want to 
+find the keywords in the event cluster that have the heighest TF-IDF weights. Therefore, it is just a matter of looking up the TF-IDF weighted term-frequnecy vectors and 
+find the best keywords. For the name entity extraction task we decided to use the built-in capabilities of NLTK. More specifically, NLTK contains functions which can implement part of speech tagging and then extract named entities based on these tags. The pseudocode for this task is not included since it has not been implemented by us. For example if the input to the system is a tweet with the following content: "Most protesters in Cairo have gathered in front of the maspiro building, protest in Alex is also picking up ‪\#jan25" then the output will be "Cairo, GPE" meaning that Cairo is identified as a location. Named entity extraction is not always accurate and therefore we must be careful when we decide whicj entities to output. For example in the above tweet the system could erroneously identify the word "Alex" as a human name. However, in reality the author of the tweet mentioned the name of the city Alexandria in Egypt. Therefore, in order to minimise the possibility of a misinterpretation we decided to output only the named entities that appear most frequently in the cluster's tweets. 
 
 \section{Classifying users}
+In our system user classification is important since it can allows us to understand the events even better. The user distribution in an event can give us insight into what has been discussed and ascribe quality to the events. For example, events that include a large amounts of tweets from journalists or media organisations are more likely to be of high quality with respect to reliability and descriptive quality. \\\\
+Since we want to investigate the events that took place during the Arab Spring we know that the important types of users we need to consider are: Media organisations, Journalists, Activists, Celebrities and Common individuals. In order, to classify a user to one of these categories we must know its profile. A user profile is an N-dimensional vector of attributes that are used to discriminate different user types. We have narrowed down these attributes to be:
+\begin{itemize}
+  \item Retweet ratio
+  \item Link ratio
+  \item How ofthen this user gets retweeted?
+  \item Ratio of replies
+  \item Ratio of mentions
+  \item Followers to followees ratio 
+\end{itemize}
+The first attribute is a simple count of the number of retweets of a user divided by the overall number of their tweets. Retweets are most commonly used by common individuals to share a tweet they liked but they are rarely used by media organisations. Therefore, if the retweet ratio is very small we may suspect that this is a media organisation. The second attribute is also an important feature as we can very easily identify a media organisation by the number of tweets that contain links. The reason is because Twitter accounts for media organisation are used to share links of their articles. If a user gets retweeted too often this is usually an indication that they are popular or their tweets are considered interesting. Therefore, the number of times a user gets retweeted can be a measure of its popularity and therefore if we observe a user which gets retweeted frequently we may assume they are a celebrity, a journalist or even an activist. A user can reply to another user by using the "@" character followed by the username and the same holds for when a user wishes to mention another user in a tweet. The difference between a mention and a reply is that replies start with the "@username" pattern whereas in tweets that mention someone this pattern can appear anywhere. Replies are usually used by common people to start and maintain conversations but are very rarely used by celebrities and media organisations. Finally, one of the most discriminating features is the followers to followees ratio. The reason for this is because celebritiesand media organisations have very high followers to followees ratio but common people have very low ratio. Activists and journalists are in the middle of the spectrum.\\\\
+The task now becomes to collect a training dataset which contains labelled user profiles. This will be used to train our classifiers. The obvious way to collect the data is by manually looking up users on Twitter and constructing their profiles. However, this will be a tedious and time consuming process and thus we decided to automatically collect our data. We have done that by crawling a website called Twitrlan \footnote{http://twtrland.com/} which provides Twitter user statistics.   
+
+
+
 \subsection{Crawling user profiles}
 \subsection{AbstractClassifier}
 \subsection{IDE3Classifier}
