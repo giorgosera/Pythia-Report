@@ -282,7 +282,13 @@ In our project we consider two methods extractive summarisation methods, the cen
 The centroid similarity approach computes the similarity of each message to its associated event cluster centroid. The cluster centroid is calculated by averaging the weight across all the document TF-IDF weigthed term-frequency vectors in a specific event. The method then selects the documents with the highest similarity value. The implicit assumption is that a cluster’s centroid emphasises important terms which are relevant to the event. For example a cluster describing the topic of some protesters giving flowers to policemen in Cairo would give higher weight to the terms "protesters", "flowers" and "policemen". Therefore documents with high similarity to these key terms are more likely to reveal key aspects of the event which is highly desired by the relevance and usefulness goals. Additionally, the quality criterion is satisfied since the centroid weights are based on frequency across all messages, and therefore they contain no typos or spelling mistakes (which can greatly affect the quality of a document). 
 
 \subsubsection{LexRank algorithm}
-[TODO explain LexRank]
+The idea of the LexRank algorithm was proposed by [put ref to paper here] and it was successfully used for extractive summarisation tasks. Instead of the idea of a centroid LexRank uses the notion of centrality, which
+assumes that sentences which are similar to many other sentences in a cluster indicate "topicality". That is, the
+sentence that is the most similar to other sentences is the most topical. Imagine the sentences forming a graph which has the sentences for nodes and the edges indicate which sentences are similar (if the similarity is above a threshold we add an edge between two nodes). The sentence/node with the more edges has the higher centrality. Usually the cosine similarity measure is used for this purpose. Other methods such as degree centrality consider each edge as being an equal vote for centrality and therefore the most edges a node has the highest the centrality. However, LexRank takes a slightly less democratic approach by giving "prestigious" sentences more voting power. The higher the centrality of a node the more its vote counts. A way of formulating this idea is to distribute the centrality of a node to its neighbors. This can be formulated by:
+
+\begin{eqnarray}
+p(u) = leftarrow c1_{size} + c2_{size} 
+\end{eqnarray} 
 
 \subsection{Detecting named entities and locations in documents}
 The summaries produced by the algorithms described above are a good representation of the event and can help a human to understand the event. However, sometimes some additional

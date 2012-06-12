@@ -328,7 +328,7 @@ def merge_closest(clusters):
 \section{Generating automatic summaries}
 So far we have managed to retrieve historical tweets from Twitter and identify clusters of topics that were discussed in them. After that we have filtered out the irrelevant clusters and kept the important ones which are considered as the events. Some of these events contain a lot of tweets and therefore it would be extremely tedious for a human observer to understand what happened during that event. Therefore, at this point we must implement our automatic summary generators. The main task here is to find the most important tweets, keywords and named entities. In the next sections we describe how we have implemented the functionality to extract this information. An overview of the summarisation module is shown in Figure \ref{SummarisationOverview}.  
 
-\begin{figure}[htbp]
+\begin{figure}[!htbp]
   \begin{center}
     \includegraphics[height=3.0in, width=6in]{summarisation-overview}
     \caption{The summarisation module receives the event clusters and outputs the highest ranked tweetsm keywords and entities in each cluster.}
@@ -337,8 +337,48 @@ So far we have managed to retrieve historical tweets from Twitter and identify c
 \end{figure} 
 
 \subsection{Ranking tweets}
+The first sub-component of the summarisation module is to device a way to rank the tweets in order to extract the most \emph{relevant}, \emph{useful} and \emph{high-quality} tweets. These are the three criteria that our summarises must meet. We described them in more detail in Chapter \ref{TheoreticalFramework} and in the following sections we will look into how we implemented two algorithms to meet these requirements.  
+
+\subsubsection{Abstract summariser}
+Again, the two summarisers share some common functionality and like the clusterers we define an AbstractSummariser which is responsible to provide these common functions. The derived summarisers will inherit these functions and also provide their own concrete implementation of the run (the function which performs the actual ranking) function. Figure \ref{SummariserArchitecture} illustrates the software architecture. 
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=2.0in, width=4in]{summarisers}
+    \caption{The two derived summarisers share common functionality which is implemented in the AbstractSummariser class. }
+    \label{SummariserArchitecture}
+  \end{center}
+\end{figure} 
+
 \subsubsection{Centroid-based summariser}
+The main idea behind this summariser is that tweets closer to the event's cluster centroid are more likely to be useful and relevant to the event than others which are distant. Also, the third criterion is met since the centroid's weights are calculated based on the average of the tweets' vectors and therefore typos and spelling mistakes are more likely to be ruled out. The implementation of this algorithm is straightforward and is shown in Listing \ref{CentroidSummariserSnippet}. First we retrieve the term-frequency vectors for all the documents in the cluster we want to rank. Then we calculate the centroid by averaging the individual vectors. Finally, the cosine similarity of each document and the centroid is calculated and we return a sorted list of similarities. The similarity acts as a ranking score since the closer a document is to a centroid the highest its ranking.  
+
+\begin{lstlisting}[language=Python, label=CentroidSummariserSnippet, caption=Pseudocode for the centoid-based summariser.]
+def run(event_cluster):
+  '''
+  Inputs:
+  event_clusters: The cluster for which we want to rank 
+                  the tweets.
+  Outputs:
+  ranked: A list of ranked tweets in descending order. 
+  '''        
+  vectors = event_cluster.get_document_vectors()
+  
+  #Calculates the centroid by averaging the individual
+  #vectors of alll the documents in the cluster.
+  centroid = calculate_centroid(vectors)
+  
+  similarities = []
+  for vector in vectors:
+    sim = cosine(vector, centroid)
+    similarities.append(sim)
+  
+  return sorted(similarities)
+  
+\end{lstlisting}
+
 \subsubsection{LexRank summariser}
+\subsection{Named entity extraction}
 
 \section{Classifying users}
 \subsection{Crawling user profiles}
