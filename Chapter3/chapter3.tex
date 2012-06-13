@@ -450,17 +450,69 @@ Since we want to investigate the events that took place during the Arab Spring w
   \item Followers to followees ratio 
 \end{itemize}
 The first attribute is a simple count of the number of retweets of a user divided by the overall number of their tweets. Retweets are most commonly used by common individuals to share a tweet they liked but they are rarely used by media organisations. Therefore, if the retweet ratio is very small we may suspect that this is a media organisation. The second attribute is also an important feature as we can very easily identify a media organisation by the number of tweets that contain links. The reason is because Twitter accounts for media organisation are used to share links of their articles. If a user gets retweeted too often this is usually an indication that they are popular or their tweets are considered interesting. Therefore, the number of times a user gets retweeted can be a measure of its popularity and therefore if we observe a user which gets retweeted frequently we may assume they are a celebrity, a journalist or even an activist. A user can reply to another user by using the "@" character followed by the username and the same holds for when a user wishes to mention another user in a tweet. The difference between a mention and a reply is that replies start with the "@username" pattern whereas in tweets that mention someone this pattern can appear anywhere. Replies are usually used by common people to start and maintain conversations but are very rarely used by celebrities and media organisations. Finally, one of the most discriminating features is the followers to followees ratio. The reason for this is because celebritiesand media organisations have very high followers to followees ratio but common people have very low ratio. Activists and journalists are in the middle of the spectrum.\\\\
-The task now becomes to collect a training dataset which contains labelled user profiles. This will be used to train our classifiers. The obvious way to collect the data is by manually looking up users on Twitter and constructing their profiles. However, this will be a tedious and time consuming process and thus we decided to automatically collect our data. We have done that by crawling a website called Twitrlan \footnote{http://twtrland.com/} which provides Twitter user statistics.   
-
-
+The task now becomes to collect a training dataset which contains labelled user profiles. This will be used to train our classifiers. The obvious way to collect the data is by manually looking up users on Twitter and constructing their profiles. However, this will be a tedious and time consuming process and thus we decided to automatically collect our data. We have done that by crawling a website called Twtrland \footnote{http://twtrland.com/} which provides Twitter user statistics.   
 
 \subsection{Crawling user profiles}
-\subsection{AbstractClassifier}
-\subsection{IDE3Classifier}
-\subsection{NNClassifier}
+A web crawler is a type of software agent that browses websites in a methodical and automated way in order to retrieve up-to-date information. This technique is used in our case to retrieve user profiles from Twtrland. Our web crawlers are constructed using an open source crawling library for Python called Scrapy \footnote{http://scrapy.org/}. A crawler is given the URL of user profile on Twtrland and then it parses the HTML code of that page and automatically retrieves the information we need. A typical page on Twtrland is shown in Figure \ref{TwtrlandPage} and the rectangles indicate the information we collect. 
 
-\section{Developing a proof-of-concept web application}\label{WebApp}
-\subsection{Optimisations}
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=1.9in, width=6in]{twtrland-page}
+    \caption{A typical Twtrland user profile. The information in the circles is retrieved by our crawler and used in the construction of the user feature vector.}
+    \label{TwtrlandPage}
+  \end{center}
+\end{figure} 
+
+\subsection{Constructing the feature vectors}
+Based on the information we have collected using our crawlers we can very easily construct a feature vector for each user. The vector has one column for each of the six attributes we 
+defined above. Some examples of feature vectors are shown in Table \ref{FeatureVectors}. The columns represent the retweet ratio, link ratio, how often this user gets retweeted, replies ratio, mentions ratio and Followers to Followees ratio (FF) respectively. 
+
+\begin{table}[htbp]
+\footnotesize
+\centering
+\begin{tabular}{ l  l  l  l  l  l  l }
+  \hline
+  \textbf{User} & \textbf{Retweets} & \textbf{Links} & \textbf{Retweeted} & \textbf{Replies} & \textbf{Mentions} & \textbf{F/F} \\ \hline
+  \emph{nytimes} & 0.0540 & 0.9091 & 0.6700 & 0.0043 & 0.0033 & 7089.2700 \\
+  \emph{aplusk} & 0.0970 & 0.4042 & 0.5000 & 0.1971 & 0.0880 & 14151.1944 \\
+  \emph{bencnn} & 0.2702 & 0.0974 & 0.4500 & 0.0988 & 0.0093 & 186.1068 \\
+  \emph{alaa} & 0.2500 & 0.0407 & 0.8700 & 0.5120 & 0.0733 & 134.4679 \\
+  \hline
+\end{tabular}
+\caption{The feature vectors of different types of users users}
+\label{FeatureVectors}
+\end{table}
+
+The first user is the Twitter account of New York times and it is representative of the feature vectors for media organisations. Low retweet rate and a large proportion of their tweets contain links as expected. Their Followers to Followees (FF) ratio is very high and one can easily infer by their low reply and mention ratii that they almost never engage in a conversation. The second example is Ashton Kutcher, a famous Hollywood actor. His FF ratio is very high as expected and another important observation is that his replies ratio is relatively high meaning that he usually chats with other users. The username bencnn belongs Ben Wedeman a famous American journalist working for CNN. An interesting observation is that his tweets are retweeted a lot. More specifically, he gets retweeted every 0.45 tweets which is the highest rate from all four examples. This is expected as he usually tweets content that people find interesting and worth sharing. Finally, the fourth example profile belongs to Alaa Abd El-Fattah, a well known Egyptian political activist. In his profile we can observe relatively low FF ratio but very high replies ratio which is expected as he usually engages in conversations with other users.
+
+\subsection{Software architecture}
+Figure \ref{Classifiers} depicts the software architecture of the user classification module. Once again we wanted to make it as easy as possible to swap implementations of classifiers and therefore
+the AbstractClassifier class factors the common functioniality of classifiers leaving the concrete implementations to the derived classes. 
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=2in, width=4in]{classifiers}
+    \caption{The two derived classifiers share common functionality which is implemented in the AbstractClassifier class. }
+    \label{Classifiers}
+  \end{center}
+\end{figure} 
+
+\subsubsection{IDE3Classifier}
+One of the most popular decision tree learning algorithms is the ID3 and there are a lot of open source implementations of it. It learns a decision trees by constructing it topdown iteratively and 
+at each iteration it tries to find the best attribute from the feature vector to be tested, i.e. the attribute that helps the most in disciminating the examples). It selects this attribute using
+a statistical test to determine how well it alone classifies the training examples.\\\\
+We have decided to use Orange's decision tree implementation which can easily extended to incorporate new functionality. In particular, in our implementation we have written wrapper functions for training and testing a classifier around Orange's functions. We train the classifier with the labelled user examples we have collected using our crawlers and then using the learned tree it can classify unkown examples. A part of the learned tree based on our training dataset is shown in Figure \ref{Tree}. ID3 selected the root node to be the FF ratio and this is expected since this attribute is usually enough to get an indication of the type of the user. If the FF ratio for an example is lower than 143.068 then we move to the left branch otherwise to the right one. We keep moving downwards the tree until we hit a leaf node which gives the final classification for this example. For instance if an example has FF ratio higher than 143.068, it gets retwetted in less than 0.070 tweets and the proportion of links in the tweets is lower than 0.043 then the we hit the leaf node labelled with the number $0$. This number indicates that the class of this example is "Celebrity".
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=3in, width=6in]{tree}
+    \caption{Part of the decision tree learned by our classifier.}
+    \label{Tree}
+  \end{center}
+\end{figure} 
+
+\subsubsection{NNClassifier}
+
 
 \section{Summary}
 
