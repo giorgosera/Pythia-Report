@@ -501,6 +501,7 @@ the AbstractClassifier class factors the common functioniality of classifiers le
 One of the most popular decision tree learning algorithms is the ID3 and there are a lot of open source implementations of it. It learns a decision trees by constructing it topdown iteratively and 
 at each iteration it tries to find the best attribute from the feature vector to be tested, i.e. the attribute that helps the most in disciminating the examples). It selects this attribute using
 a statistical test to determine how well it alone classifies the training examples.\\\\
+We consider decision trees to be an excellent choice in our case since they are less prone to noise in the data than other algorithms. Our dataset is likely to contain noisy user profiles since some of the user profiles are misleading due to the existence of automatic tweet bots and fake accounts. These effect of these noisy data can be ruled out by the decision tree learning algorithm.  
 We have decided to use Orange's decision tree implementation which can easily extended to incorporate new functionality. In particular, in our implementation we have written wrapper functions for training and testing a classifier around Orange's functions. We train the classifier with the labelled user examples we have collected using our crawlers and then using the learned tree it can classify unkown examples. A part of the learned tree based on our training dataset is shown in Figure \ref{Tree}. ID3 selected the root node to be the FF ratio and this is expected since this attribute is usually enough to get an indication of the type of the user. If the FF ratio for an example is lower than 143.068 then we move to the left branch otherwise to the right one. We keep moving downwards the tree until we hit a leaf node which gives the final classification for this example. For instance if an example has FF ratio higher than 143.068, it gets retwetted in less than 0.070 tweets and the proportion of links in the tweets is lower than 0.043 then the we hit the leaf node labelled with the number $0$. This number indicates that the class of this example is "Celebrity".
 
 \begin{figure}[htbp]
@@ -512,9 +513,10 @@ We have decided to use Orange's decision tree implementation which can easily ex
 \end{figure} 
 
 \subsubsection{NNClassifier}
-
+Another approach for classifying users is the k-Nearest neighbor which is again effective in handling noisy datasets given a relatively large training dataset. Once again we have used the k-Nearest neighbor algorithm implemented with Orange and in Chapter \ref{Evaluation} we compare its performance against the decision tree implementation. The algorith receives the training data, in the same way as the ID3 algorithm does and then we can present it with a new example to get its classification. As it is expected a lazy learning algortihm like k-Nearest neighbor takes longer to classify an example but much less time during training since effectively there is no training phase.   
 
 \section{Summary}
+
 
 % ------------------------------------------------------------------------
 

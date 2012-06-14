@@ -326,8 +326,8 @@ Figure 3.6 illustrates a simple decision tree, which classifies a day's weather 
   \end{center}
 \end{figure} 
 
-\subsection{Neural networks}
-[TODO explain Neural Nets]
+\subsection{k-Nearest neighbor}
+k-Nearest neighbor algorithm is the most basic instance based learning algorithm [put reference mitchell]. Instance based methods are called \emph{lazy} learning methods they simply store the data and generalizing beyond these data is postponed until an explicit request is made[put ref notes]. This is the exact opposite of eager learning methods such as decision trees or neural networks which construct general, explicit description of the target function based on the provided training examples. The algorithm assumes that all instances belong to an n-dimensional space and the nearest neighbors of an instance are defined in terms of the Euclidean distance. The main idea behind the k-Nearest neighbor is the so called majority voting. The k nearest neighbors of an instance vote for its classification. The class given the majority of votes is assigned to the new example. A refinement of this algorithm is the distance weighted nearest neighbor algorithm where the vote of distant instances counts less.  
 
 \section{Summary}
 
