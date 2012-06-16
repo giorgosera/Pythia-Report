@@ -15,7 +15,7 @@ proof-of-concept application in Chapter \ref{CaseStudy}.
 Cluster analysis is the core component of our system and its evaluation is of great importance to us. We have implemented 
 four different clustering algorithms and some of them have been used with success in traditional document clustering. However,
 in our case we are asked to tackle an entirely different problem since we deal with social media content and the challenges that come with it. 
-We have identified three major challenges that are inherent to tweets and our clustering evaluation evaluates qualitatively the individual merits and demerits 
+We have identified three major challenges that are inherent to tweets and our clustering evaluation evaluates quantitatively the individual merits and demerits 
 of each algorithm with respect to these challenges. More specifically, the three major challenges are:
 
 \begin{itemize}
@@ -103,7 +103,7 @@ Here I will put the results and graphs about the execution time performance of t
 
 \section{Twitter user classification evaluation}
 
-\subsection{Data and evaluation methodology}\label{ClassifiersEvaluationMethod}
+\subsection{Evaluation methodology}\label{ClassifiersEvaluationMethod}
 In this section our aim is to identify which one of our classification algorithms performs better in terms of classification accuracy. Our classifier evaluation process involves the precision and recall metrics as well as the $F_1$ score. The precision and recall metrics definitions in this section are different from the ones described in section \ref{ClusteringEvaluationMethod} since classification is a supervised learning method and we can calculate these metrics using the labels of that training dataset. More specifically, precision can be thought as a measure of what percentage of examples that are classified by a classifier in a certain class are actually members of that class. On the other hand recall is a measure of what percentage of the overall population of examples belonging to a certain class have been classified by the classifier in that particular class. Formally, precision and recall are defined as:
 
 \begin{eqnarray}
@@ -123,18 +123,29 @@ where
   \item False Negatives ($FN$): These are the positive tuples that were incorrectly labelled as negatives by our algorithm.
 \end{itemize}\vspace{15pt}
 
-In order to carry on our evaluation we have crawled 200 user profiles from Twtrland and labelled them manually according to the five user categories (celebrities, media organisations, journalists, activists and common people). During the process of labelling we made sure that the training dataset was as unambiguous as possible. However, in some cases the choice was not clear especially for the journalists and activists, since these two categories both overlap. A number of journalists usually are known to be activists as well. Finally, in order to produce as accurate results as possible we have used 10-fold cross validation. Cross-validation is the statistical practice of partitioning a sample of data into subsets such that the classifiers accuracy is tested on a single subset, while the other subsets are used for training. Since we have used 10-fold cross validation we split our dataset in subsets of 20 examples and 180 are used for training while the rest are used to test the classifier.
-
 \subsection{Results and discussion}
+
+In order to carry on our evaluation we have crawled 200 user profiles from Twtrland and labelled them manually according to the five user categories (celebrities, media organisations, journalists, activists and common people). During the process of labelling we made sure that the training dataset was as unambiguous as possible. However, in some cases the choice was not clear especially for the journalists and activists, since these two categories both overlap. A number of journalists usually are known to be activists as well. Finally, in order to produce as accurate results as possible we have used 10-fold cross validation. Cross-validation is the statistical practice of partitioning a sample of data into subsets such that the classifiers accuracy is tested on a single subset, while the other subsets are used for training. Since we have used 10-fold cross validation we split our dataset in subsets of 20 examples and 180 are used for training while the rest are used to test the classifier.\\\\
+Figure \ref{DifferentClassifiersResults} demonstrates the average results of running 10-fold cross validation 100 times. Information gain is used as the statistical measure for selecting tree nodes in ID3 and post-pruning of the trees takes place after training in order to minimise the effects of overfitting. Also, for the k-nearest neighbor algorithm we have used Euclidean distance to measure similarity between examples and $k=10$ (10 nearest neighbors have given the best results in our dataset). 
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=5in, width=6in]{classifiers_bad}
+    \caption{The F metrics obtain after 10-fold cross validation on our dataset for the two classifiers.}
+    \label{DifferentClassifiersResults}
+  \end{center}
+\end{figure}
+The results reveal that for all the classes the performance of the decision tree learning algorithm is better compared to the k-nearest neighbor learning. We attribute the differences in the results in two factors. First of all k-nearest neighbors algorithm is highly effective in cases when it is given a sufficient amount of training data. In our case due to the time-consuming process of collecting and manually labelling user profiles we have provided a small amount of training examples. The second problem is that since the user feature vectors are constructed based on a user's activity on Twitter we expect to have some outliers indicating irregular activity from some users (i.e. a celebrity having a small followers-to-followees ratio because they follow back almost everyone). These outliers can reduce the performance of a k-nearest neighbor classifier but we can use a weighted version of the algorithm where the effect distant examples is negligible. Additionally, unlike decision trees, the classification decision is based on all the attributes of the feature vector (Euclidean distance uses the whole vector length to calculate the distance). However, usually only a subset of these attributes are relevant for classification and therefore a similarity measure based on many irrelevant features might be misleading.\\\\ 
+Based on the hypothesis that distance-weighted nearest neighbor algorithm can improve the performance we have changed our implementation to take into account the weights of each neighbor and the results are shown in Figure \ref{DifferentClassifiersResultsImproved}. It is obvious that the effect of outliers was significant in the case of common people since we can see an improvement over the old implementation.\\\\
+A very important observation is the fact that for both classifiers the two classes with the lowest F score are the journalists and activists. This was expected because these two classes overlap significantly. Even for a human is difficult to distinguish between a journalist and an activist since sometimes some journalists are also activists. Finally, media organisations have the highest F score and again this was expected because they have some discriminating characteristics which can easily separate them from the other classes. Since these accounts act on behalf of huge organisations they do not act as human but more like a bot. For example, they almost never engange in conversation nor they retweet.  
 
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[height=5in, width=6in]{classifiers}
     \caption{The F metrics obtain after 10-fold cross validation on our dataset for the two classifiers.}
-    \label{DifferenClassifiersResults}
+    \label{DifferentClassifiersResultsImproved}
   \end{center}
 \end{figure}
-
 
 \section{Optimisations}
 Briefly explain how we improbed the execution time
