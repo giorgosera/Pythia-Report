@@ -123,6 +123,8 @@ where
   \item False Negatives ($FN$): These are the positive tuples that were incorrectly labelled as negatives by our algorithm.
 \end{itemize}\vspace{15pt}
 
+In order to carry on our evaluation we have crawled 200 user profiles from Twtrland and labelled them manually according to the five user categories (celebrities, media organisations, journalists, activists and common people). During the process of labelling we made sure that the training dataset was as unambiguous as possible. However, in some cases the choice was not clear especially for the journalists and activists, since these two categories both overlap. A number of journalists usually are known to be activists as well. Finally, in order to produce as accurate results as possible we have used 10-fold cross validation. Cross-validation is the statistical practice of partitioning a sample of data into subsets such that the classifiers accuracy is tested on a single subset, while the other subsets are used for training. Since we have used 10-fold cross validation we split our dataset in subsets of 20 examples and 180 are used for training while the rest are used to test the classifier.
+
 \subsection{Results and discussion}
 
 \begin{figure}[htbp]
