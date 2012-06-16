@@ -36,11 +36,36 @@ What we try to achieve in the next sections is to evaluate our clustering algori
 record the performance of each algorithm in each case. In addition to these variables we also investigate the effect of different similarity measures on our results. 
 
    
-\subsection{Data and evaluation methodology}
+\subsection{Data and evaluation methodology}\label{ClusteringEvaluationMethod}
 Our aim is to measure the quality of a clustering algorithm and we have a few methods to choose from to achieve this. There are two categories of clustering evaluation methods and the choice depends
 on whether a ground truth is available. The first category is the extrinsic methods which require the existence of a ground truth and the other category is the intrinsic methods. In general, extrinsic methods try to assign a score, $Q(C, C_g)$, to a clustering $C$, given the ground truth $C_g$, whereas intrinsic methods evaluate clustering by examining how well the clusters are separated and how compact they are [put reference data mining book here].\\\\ 
-In our evaluation we decided to use an extrinsic method by constructing the ground truth using data from the Arab Spring. More specifically, we use the BCubed precision and recall metrics. The BCubed precion and recall metrics differ from the traditional precision and recall in the sense that clustering is an unsupervised learning technique and therefore we do not know the labels of the clusters beforehand. For this reason BCubed metrics evaluate the precion and recall for evry object in a clustering on a given dataset according to the ground truth. The precision of an example is an indication of how many other examples in the same cluster belong to the same category as the example. The recall of an example reflects how many examples of the same category are assigned to the same cluster. Finally, we can combine these two metrics in one using the F2 metric which is the measure we report in our results.\\\\   
-For the construction of the ground truth we have manually labelled/categorised 500 tweets according to the events they described. These tweets are collected using our data retrieval module and they are related to the Egypt's uprising. More specifically, these tweets describe the events that took place during a 2-hour period (12pm - 14pm) on 25th of January 2011.    
+In our evaluation we decided to use an extrinsic method by constructing the ground truth using data from the Arab Spring. More specifically, we use the BCubed precision and recall metrics. The BCubed precion and recall metrics differ from the traditional precision and recall (described in section \ref{ClassifiersEvaluationMethod}) in the sense that clustering is an unsupervised learning technique and therefore we do not know the labels of the clusters beforehand. For this reason BCubed metrics evaluate the precion and recall for every example in a clustering on a given dataset according to the ground truth. The precision of an example is an indication of how many other examples in the same cluster belong to the same category as the example. The recall of an example reflects how many examples of the same category are assigned to the same cluster.\\\\ 
+Formally, let $D = \{ 0_1,....,o_n \}$ be a set of examples, and $C$ be a clustering on $D$. Let $L(o_i)$ where $1 \leq i \leq n$ be the label of $o_i$ given by the ground truth, and $C(o_i)$ be the cluster identifier of $o_i$ in $C$. Then, for two examples, $o_i$ and $o_j$, where $i \neq j$, the \emph{correctness} of the relation between $o_i and o_j$ is defined by:
+
+\begin{eqnarray}
+Correctness(o_i, o_j) = \begin{cases}
+                          1& \text{if $L(o_i) = L(o_j) \Leftrightarrow C(o_i) = C(o_j) $},\\
+                          0& \text{otherwise}.
+                        \end{cases}
+\end{eqnarray} 
+
+BCubed precision is defined as 
+
+\begin{eqnarray}
+Precision BCubed = \frac{ \sum_{i=1}^{n} \frac{\sum_{o_j:i \neq j, C(o_i)=C(o_j)}^{} Correctness(o_i, o_j)}{\Vert \{ o_j | i \neq j, C(o_i) = C(o_j)  \}  \Vert} }{n}
+\end{eqnarray} 
+
+BCubed Recall is defined as
+
+\begin{eqnarray}
+Recall BCubed = \frac{ \sum_{i=1}^{n} \frac{\sum_{o_j:i \neq j, L(o_i)=L(o_j)}^{} Correctness(o_i, o_j)}{\Vert \{ o_j | i \neq j, L(o_i) = L(o_j)  \}  \Vert} }{n}
+\end{eqnarray} 
+While recall and precision can be used to determine the quality of a classifier, the usual approach is to combines the recall and precision rates in a single equation and this is 
+achieved using the $F$ metric which is defined as:
+\begin{eqnarray}
+F = \frac{2 \times precision \times recall}{precision + recall}
+\end{eqnarray} 
+For the construction of the ground truth we have manually labelled/categorised 300 tweets according to the events they described. These tweets are collected using our data retrieval module and they are related to the Egypt's uprising. More specifically, these tweets describe the events that took place during a 2-hour period (12pm - 14pm) on 25th of January 2011.    
     
 \subsection{Results}
 \subsubsection{Number of documents}
@@ -73,16 +98,44 @@ In this section we investigate the performance of the four different algorithms 
   \end{center}
 \end{figure}
 
+\subsubsection{Execution time performance}
+Here I will put the results and graphs about the execution time performance of the algorithms
 
 \section{Twitter user classification evaluation}
 
-\subsection{Background}
-Explain the metrics and the method used.
+\subsection{Data and evaluation methodology}\label{ClassifiersEvaluationMethod}
+In this section our aim is to identify which one of our classification algorithms performs better in terms of classification accuracy. Our classifier evaluation process involves the precision and recall metrics as well as the $F_1$ score. The precision and recall metrics definitions in this section are different from the ones described in section \ref{ClusteringEvaluationMethod} since classification is a supervised learning method and we can calculate these metrics using the labels of that training dataset. More specifically, precision can be thought as a measure of what percentage of examples that are classified by a classifier in a certain class are actually members of that class. On the other hand recall is a measure of what percentage of the overall population of examples belonging to a certain class have been classified by the classifier in that particular class. Formally, precision and recall are defined as:
+
+\begin{eqnarray}
+precision = \frac{TP}{TP + FP}
+\end{eqnarray}  
+
+\begin{eqnarray}
+recall = \frac{TP}{TP + FN}
+\end{eqnarray}  
+
+where 
+
+\begin{itemize}
+  \item True Positives ($TP$): These are the positive tuples that were correctly labelled by our algorithm. 
+  \item True Negatives ($TN$): These are the negative tuples that were correctly labelled by our algorithm.
+  \item False Positives ($FP$): These are the negative tuples that were incorrectly labelled as positive by our algorithm.
+  \item False Negatives ($FN$): These are the positive tuples that were incorrectly labelled as negatives by our algorithm.
+\end{itemize}\vspace{15pt}
 
 \subsection{Results and discussion}
-Present and discuss the results
+
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=5in, width=6in]{classifiers}
+    \caption{The F metrics obtain after 10-fold cross validation on our dataset for the two classifiers.}
+    \label{DifferenClassifiersResults}
+  \end{center}
+\end{figure}
+
 
 \section{Optimisations}
+Briefly explain how we improbed the execution time
 
 \section{Summary}
 

@@ -1,16 +1,15 @@
-\chapter{A data mining framework for automatic event detection and summarisation}\label{TheoreticalFramework}
+\chapter{The theoretical background of our methodology}\label{TheoreticalFramework}
 \ifpdf
     \graphicspath{{Chapter2/Chapter2Figs/PNG/}{Chapter2/Chapter2Figs/PDF/}{Chapter2/Chapter2Figs/}}
 \else
     \graphicspath{{Chapter2/Chapter2Figs/EPS/}{Chapter2/Chapter2Figs/}}
 \fi
 
-In this chapter, we will define a theoretical framework for construction of a 
+In this chapter, we will define a theoretical framework for the construction of a 
 data mining system which can extract events from Twitter data. The system comprises of a number
 of individual components which when combined together construct a complete framework for 
 event extraction. These components are explained in detail in the sections below and in 
-Chapter \ref{chap:DesignAndImplementation} we discuss the concrete implementation of this framework as 
-well as the development of a proof-of-concept application using this framework.\\
+Chapter \ref{chap:DesignAndImplementation} we discuss the concrete implementation of this framework.\\
 The sections of this chapter introduce the motivating work for the implementation of the system
 and we also take a closer look at the concepts and key ideas that are necessary to understand the process we employ.
 
@@ -41,6 +40,7 @@ can be used on our data:
  \item \textbf{Stopword removal:} Some of the words occuring in the documents are common English words such as 'the', 'and' and 'a'. These words convey almost no information 
  but most importantly, they can reduce the clustering accuracy. Two documents can be erroneusly considered related if they contain common English words like the ones
   we have already mentioned. Therefore, it is important to remove these stopwords. Usually, a dictionary of the common English stopwords is used to filter them out.   
+ \item \textbf{Spell checking:} [TODO:] explain about the use of a spell checker to correct wrong words
  \item \textbf{Stemming:} This is a mechanism for reducing English words to their stem form. For example, the stem form of the words `connections' and `connected' is `connect'. This mechanism is particularly useful in the field of information retrieval and indexing. M.F Porter designed the most widely used stemming algorithm in 1980 [Insert ref here]. This algorithm works by applying a set of different rules, which after a number of iteration yield the final resut which is the stem of the word. Porter
 has developed 62 rules which may or may not apply to a given word.
 \end{itemize}\vspace{15pt}
