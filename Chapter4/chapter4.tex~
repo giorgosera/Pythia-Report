@@ -25,12 +25,13 @@ of each algorithm with respect to these challenges. More specifically, the three
    number of tweets.    
    \item \textbf{Document length:} Tweets, unlike normal web documents, are very short and they are limited to 140 characters. Longer documents are, in general, more likely
   to contain more examples of the features of interest than shorter ones [put reference here Hermann Moisl ] hence clustering may be more accurate with longer documents. This fact may 
-  affect the accuracy of our algorithms and we should investigate their relative performance. 
+  affect the accuracy of our algorithms and we should investigate their relative performance. In our evaluation we use the average document length which is the sum of lengths of all documents 
+  in the corpus divided by the number of documents. 
    \item \textbf{Vocabulary diversity :} Another major challenge due to the nature of the tweets is the diversity of the vocabulary used. Tweets are supposed to be informal documents
    and this greatly affects the quality of their content. For example, many tweets contain spelling mistakes, typos or abbreviations and sometimes users use words from multiple languages.
    Also, usually people tend to make small modifications to existing tweets and retweet them with the consequence that we collect several tweets that essentially have the same meaning but their
    vocabulary varies. This is a big concern for us since our clustering methods use the vector space representation which uses the word frequencies to find similarities. Hence the vocabulary 
-   diversity will affect the term frequencies and consequently our results. 
+   diversity will affect the term frequencies and consequently our results. We define vovabulary diversity as the number of distinct terms in a corpus divided by the number of documents in the corpus.
 \end{itemize} 
 What we try to achieve in the next sections is to evaluate our clustering algorithms by considering the three challenges describes above as variables. We vary these variables and 
 record the performance of each algorithm in each case. In addition to these variables we also investigate the effect of different similarity measures on our results. 
@@ -65,21 +66,35 @@ achieved using the $F$ metric which is defined as:
 \begin{eqnarray}
 F = \frac{2 \times precision \times recall}{precision + recall}
 \end{eqnarray} 
-For the construction of the ground truth we have manually labelled/categorised 300 tweets according to the events they described. These tweets are collected using our data retrieval module and they are related to the Egypt's uprising. More specifically, these tweets describe the events that took place during a 2-hour period (12pm - 14pm) on 25th of January 2011.    
     
 \subsection{Results}
-\subsubsection{Number of documents}
-In this section we investigate the performance of the four different algorithms when the number of documents in our dataset varies while the other variables, the document length and the vocabulary diversity are kept constant. We run three different experiments for this evaluation case and in each one we change the similarity metric used. The results we obtained are illustrated in Figure \ref{DifferentSizeResults}
+For the construction of the ground truth we have manually labelled/categorised 285 tweets according to the events they described. In this dataset we have identified 35 different events. These tweets are collected using our data retrieval module and they are related to the Egypt's uprising. More specifically, these tweets describe the events that took place during a 2-hour period (12pm - 14pm) on 25th of January 2011.    
+
+\subsubsection{Evaluation of clusterers with different number of documents}\label{EvalDiffNoDocs}
+In this section we investigate the performance of the four different algorithms when the number of documents in our dataset varies while the other variables, the document length and the vocabulary diversity are kept constant. More specifically, we start with a small dataset of 50 documents and we iteratively add more documents (5 each time) until we reach a dataset size of 285. The average document length is $116.44$ characters/document and the vocabulary diversity is $1.07$ words/document. Also, the optimal parameters for the four classifiers are:
+
+\begin{itemize}
+  \item \textbf{k-Means:} The number of clusters, $k$, is set to 35 since we expect 35 events to be found. 
+  \item \textbf{DBSCAN:} The two parameters needed for DBSCAN are set to $ε$=0.5 and $min_pts=5$. 
+  \item \textbf{NMF:} The number of bases is 35 since we expect 35 events (bases).
+  \item \textbf{Online:} The window size is set to one third of the dataset size at any iteration. 
+\end{itemize}\vspace{15pt}
+We run three different experiments, each one with a different similarity metric. The results we obtained are illustrated in Figure \ref{DifferentSizeResults}
 
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[height=5in, width=6in]{number_of_documents}
-    \caption{Each plots depicts the results of the experiment with a different similarity measure.}
+    \caption{Each plots depicts the results obtained using a different similarity metric. In each plot we illustrate the BCubed F metric (y-axis) against the number of documents (x-axis) of each clusterer.}
     \label{DifferentSizeResults}
   \end{center}
 \end{figure}
+The first important observation is that in all the plots DBSCAN and k-Means clusterers outperform the others in terms of the BCubed F metric. In all three cases k-Means performance is constantly around 0.8 although in the case of Euclidean distance the performance has a slightly negative trend as the number of document increases. On the other hand, DBSCAN initially has very low performance but as the number of documents increases the performance becomes better. A possible explanation is offered in [put reference 4 in pramata] which states that a disadvantage of DBSCAN algorithm is that it cannot cluster datasets well with large differences in density. Initially, the dataset is not very dense since the number of documents is small. However, as the number of document increases the performance increases too. The same scenario is depicted in the cases of cosine and Jaccard similarities. The only difference is that this time the initial performance of DBSCAN is not as low as for the Euclidean case.\\\\
+The performances of the other two clusterers are much lower with the NMF clusterer having the lowest performance. The low performance of the online clusterer is expected since we have sacrificed accuracy for execution time performance by considering a limited window size. We have mentioned before that the term-frequency matrix for an online clusterer is constructed using only the last $N$ documents where $N$ is the window size. Therefore, any documents before this are lost and the TF-IDF weightings in the matrix are not accurate. A possible solution would be to use an approach similar to a moving average where the new TF-IDF weightings are calculated based on all the previous information plus the new information coming into the system.   
 
 \subsubsection{Document length}
+In this experiment our aim is to evaluate our clusterers with different average document lengths in the corpus. We try to emulate the cases when a dataset conatins short documents and when it contains very long documents. Also, we want to find what happens in between. The motivation for this experiment is that Twitter corpora are very short and we hypothesize that short documents yield worse results in terms of clustering quality.\\\\
+We start with our original dataset which is described above and we incrementally add more words in the documents to deliberately increase their lenght. However, we have to keep the other two variables of our experiments constant. The number of documents is constant at 285 documents and in order to keep the vocabulary diversity constant, at $1.07$ words/document, the words that are appended to the documents are words that already belong to the dataset. Therefore, we achieve an increase in the document length without changing the vocabulary diversity. The initial value for the average document length is $116.44$. The clusterers use the same parameters as in Section \ref{EvalDiffNoDocs}.   
+   
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[height=5in, width=6in]{average_document_length}
