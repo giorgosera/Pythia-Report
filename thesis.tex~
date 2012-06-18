@@ -1,7 +1,7 @@
 %input macros (i.e. write your own macros file called MacroFile1.tex)
 \include{Macros/MacroFile1}
 
- \documentclass[oneside,12pt]{Classes/CUEDthesisPSnPDF}
+ \documentclass[oneside,11pt]{Classes/CUEDthesisPSnPDF}
 
 
 \ifpdf
@@ -17,7 +17,7 @@
                   /OpenAction (fitbh)  }
 \fi
 
-\title{Understanding Revolution 2.0 - Mining the Arab Spring Social Network Data}
+\title{Understanding Revolution 2.0 - Mining the Arab Spring Twitter Data}
 
 \ifpdf
   \author{\href{mailto:george.eracleous08@imperial.ac.uk}{George Eracleous}}

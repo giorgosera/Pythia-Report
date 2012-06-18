@@ -5,6 +5,14 @@
     \graphicspath{{Chapter5/Chapter5Figs/EPS/}{Chapter5/Chapter5Figs/}}
 \fi
 
+\section{Pythia - An event exploration web application}\label{WebApp}
+Our work in the previous chapters have led to the development of a proof-of-concept web application which can be used to extract and explore
+events from Twitter. Pythia can be thought as the last module in the system overview in Figure \ref{SystemOverview}. It provides a graphical user interface that helps humans visualise the results of event detection and summarisation. The main motivation behind the development of this application is to demonstrate the capabilities of our work by looking at historical Twitter data from the Egypt uprising.\\\\
+In the next section we describe how the application is built and how it can be used and the rest of the chapter shows the output of Pythia from Egypt's dataset.    
+
+\subsection{Building Pythia}\label{WebApp}
+Pythia 
+
 \section{Case study on a synthetic dataset}
 \subsection{Results and discussion}
 
