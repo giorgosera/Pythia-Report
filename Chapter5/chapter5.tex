@@ -41,7 +41,7 @@ The list of keywords is send to the server and the relevan tweets are retrieved 
     \label{Pythia2}
   \end{center}
 \end{figure} 
-In order to understand the events more information is needed. Therefore, we have created a special popup window which displays the results of the summarisation algorithm in a human readable way. This popup window is shown in Figure \ref{Pythia3}. The user can clearly see which tweets have the highest ranking according to the LexRank algorithm and the top keywords related to the event. Additionally, if any named-entities or locations have been identified they are displayed in the relevant sections. Finally, the pie chart in the right hand corner demonstrates the results of the user classification module by showing the proportions of the user types occuring in this event.    
+In order to understand the events more information is needed. Therefore, we have created a special popup window which displays the results of the summarisation algorithm in a human readable way. This popup window is shown in Figure \ref{Pythia3}. The user can clearly see which tweets have the highest ranking according to the LexRank algorithm and the top keywords related to the event. Additionally, if any named-entities or locations have been identified they are displayed in the relevant sections. Finally, the pie chart in the right hand corner demonstrates the results of the user classification module by showing the proportions of the user types occuring in this event.\\\\    
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[height=3in, width=6in]{pythia3}
@@ -50,13 +50,41 @@ In order to understand the events more information is needed. Therefore, we have
   \end{center}
 \end{figure} 
 
-\section{Case study on a clean dataset}
-\subsection{Results and discussion}
+\section{Case studies}
+In the next sections we investigate how Pythia performs when it is presented with two different kinds of datasets. Our evaluation is qualitative and it will be based on
+the following criteria:
+\begin{itemize}
+  \item \textbf{Did Pythia detected the expected events?:} In some cases we might be able to have prior knowledge of the existence of some events in the dataset. We need to find out if Pythia is able to retrieve those known events. Even in the case when we do not possess complete prior knowledge about the dataset we expect our system to detect real world-events and not random discussion about the topic. 
+  \item \textbf{Is the summary produced by Pythia helpful?:} The purpose of the event summary is to give more information to the user about an event. We evaluate the performance of the summarisation algorithm using the three criteria we set before: relevance, quality, usefulness. 
+  \item \textbf{Is Pythia helpful for exploring a historical dataset?:} In general, we must assess if Pythia makes the task of exploring a dataset any easier and if it solves the problem posed by this project.
+\end{itemize}\vspace{15pt}
 
-\section{Case study on a real dataset}
-\subsection{Results and discussion}
+\subsection{Clean dataset}
+We first evaluate Pythia using a dataset collected from Twitter for the time period between 25th January 2011 1200pm and 25th January 2011 1220pm. The keywords used to collect the dataset are: 25jan, jan25, egypt, tahrir, mubarak, suez, DownWithMubarak, NOSCAF, SCAF, cairo". The retrieved collection of tweets has been manually processed in order to remove any irrelevant tweets such as spam tweets and discussions. We removed discussions since we want to detect cluster of tweets that describe an event and not meta-discussion about it. The size of the processed dataset is relatively small and it consists of 300 tweets. We have identified 40 different events in the clean dataset and these are the ones we expect Pythia to find. We have given titles to these events and we provide this list of titles in Appendix \ref{Appendix}.\\\\ 
+Running Pythia on this clean dataset we get the timeline shown in Figure \ref{Pythia4}. In total, Pythia has detected 36 events out of which 33 are in the list of expected events. The remaining 3 detected events contain combinations of tweets from the other events and therefore we cannot identify which event they describe. Furthermore, the summaries of the events produced mixed results. For all the events that have been correctly detected the top tweets, ranked by the LexRank algorithm, were matching accurately the expected title of the event. However, the named entity recognition algorithm missed some of the named entities in the tweets and it incorrectly identified random words as named entities.    
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=3in, width=6in]{pythia4}
+    \caption{The annotated timeline of the detected events for the clean dataset. 31 out of the 40 expected events were detected.}
+    \label{Pythia4}
+  \end{center}
+\end{figure} 
+
+\subsection{Real dataset}
+We have seen what Pythia can achieve on a clean dataset but we would like to know its performance on a dataset containing noisy tweets. Noisy tweets are defined as tweets that are either irrelevant to an event or they do not describe an event at all (general discussions between users). In order to compare the results on the noisy dataset with the ones we obtained previously we will use the same dataset as before but now we will not remove the noisy tweets. The timeline for the noisy dataset in Figure \ref{Pythia4} shows that the algorithm detected 45 events. A closer look at the results shows that Pythia has detected 27 of the 40 expected events. The remaining events appear to have different content from the events in our list of expected events. The performance of the summarisation part was the same as for the clean dataset since the ranking algorithms worked very well, unaffected by the noise, in surfacing the most relevant tweets.   
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=3in, width=6in]{pythia5}
+    \caption{The annotated timeline of the detected events for the noisy dataset. 24 out of the 40 expected events were detected.}
+    \label{Pythia5}
+  \end{center}
+\end{figure} 
+
+\subsection{Real dataset with different granularities}
+We have carried out some further experiments with Pythia that try to test its performance on a datasets that cover longer time periods. So far we have tried Pythia with datasets that cover smaller time periods. We have run two experiments one with a dataset covering the week starting on 25th January 2011 and another one covering the month starting on 25th January 2011. In the case of the week-long dataset Pythia detected 120 events and for the month-long dataset it detected 320 events. Since these events are far too many to be analysed we decided to select the top ten events according to the ranking given by the metric described in Section \ref{IdentifyEvents}. The most important observation is that as the dataset begins to cover a longer time period Pythia produces more complex and unclear events. More specifically, for the dataset covering a month the top ten events were a mixture of different events and it is extremely hard for a human to identify the specific topic of the event. The reason is because due to the larger size of the dataset the clustering methods accumulate many more tweets in each cluster and the probability of these tweets being irrelevant increases. For the dataset covering a week the problem was as apparent as in the case of the month-long dataset but the events started to become incoherent.      
 
 \section{Summary}
+
 
 % ------------------------------------------------------------------------
 

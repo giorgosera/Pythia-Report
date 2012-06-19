@@ -1,8 +1,7 @@
 %input macros (i.e. write your own macros file called MacroFile1.tex)
 \include{Macros/MacroFile1}
 
- \documentclass[oneside,11pt]{Classes/CUEDthesisPSnPDF}
-
+ \documentclass[twoside,11pt]{Classes/CUEDthesisPSnPDF}
 
 \ifpdf
     \pdfinfo { /Title  (MEng Individual Project)
