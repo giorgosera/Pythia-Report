@@ -322,7 +322,7 @@ def merge_closest(clusters):
 \subsection{Clustering results}
 [TODO: add screenshots from the clustering results]
 
-\section{Identifying events}
+\section{Identifying events}\label{IdentifyEvents}
 [TODO: Complete this section]
 
 \section{Generating automatic summaries}
