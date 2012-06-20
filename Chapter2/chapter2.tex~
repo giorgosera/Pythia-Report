@@ -146,9 +146,6 @@ tf-idf_{t,d} = tf_{t, d} \times idf_t
 where $tf_{t, d}$ is the importance of term $t$ in document $d$ and $idf_t$ is the importance of term $t$ relative to the entire corpus. $tf_{t,d}$ is higher when the term occurs many times in the document and $idf_t$ is higher when it occurs rarely in the dataset. Therefore, the TF-IDF weighting for a term is very high if the term occurs frequently in a single document but very rarely in the entire corpus and it is low when the term either occurs rarely in a document or frequently in the entire corpus. TF-IDF is widely used to compare the similarity between documents and a common use case is for search queries where the similarity of a query $q$ with a document $d$ is calculated using TF-IDF, providing
 a sorted list of the most relevant documents. 
 \\
-   
-\subsection{Feature selection}
-TODO: Discusss feature selection methods used in our system.
 
 \subsection{Distance measures}
 In data mining applications including clustering we must decide whether two objects are similar or dissimilar. In document clustering we wish to 

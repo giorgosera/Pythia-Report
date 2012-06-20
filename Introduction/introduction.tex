@@ -60,7 +60,7 @@ The objectives above will lead to complete data mining system able to detect eve
 a prototypical application using a graphical user interface to allow humans to explore events in historical datasets from Twitter. 
 
 \section{Contributions}
-In the process of developing the solutions for the problems described above we have come across several
+In the process of developing the solutions for the problems identified above we have come across several
 challenges as well as some opportunities. We have tried to tackle all the difficulties and also exploit the 
 opportunities we were given. Our efforts have led to several contributions and the following list summarises the main contributions of this project:
 \begin{itemize}
@@ -72,15 +72,25 @@ opportunities we were given. Our efforts have led to several contributions and t
  several sub-components. These components vary from data acquisition tools to clustering algorithms and text processing tools. These
  individual components can act independently to solve smaller tasks but most importantly they can be combined to solve the problems posed 
  by this project.  
- \item \textbf{Evaluation of the toolset sub-components:} The core component of our solution for the event detection problem is text clustering. The challenging aspect of our work is that we had to deal with social media content
- which offers some advantages but at the same time it poses significant challenges. After implementing several clustering algorithms we have conducted a thorough evaluation study to assess their individual performance in several aspects that are unique to social media documents. Additionally, the user classification components have been evaluated as well and our results can be used as a guidance to future projects in this area.      
+ \item \textbf{Evaluation of the toolset's sub-components:} The core component of our solution for the event detection problem is text clustering. The challenging aspect of our work is that we had to deal with social media content
+ which offers some advantages but at the same time it poses significant challenges. After implementing several clustering algorithms we have conducted a thorough evaluation study to assess their individual performance in several aspects that are unique to social media documents. Additionally, the user classification components have been evaluated as well and our results can be used as a guidance for future projects in this area.      
  \item \textbf{Pythia - a web application for event detection and summarisation:}We have built a proof-of-concept web application which uses our algorithm to detect events and summarize them using Twitter data. The application provides a user friendly
  environment and data visualisations to allow the user to discover events in historic data.
  \item \textbf{Pythia is used to conduct a case study on Arab Spring:}We have collected and analysed a large number of Twitter content related to the Arab Spring and we have used this dataset to conduct a case study on real data using
- our algorithm and web application.  	 
+ our algorithms and web application.  	 
 \end{itemize}\vspace{15pt}
 \section{Report Structure}
-TODO: Complete this section when the rest of the report is done.
+The rest of this report is organised as follows:
+\begin{itemize}
+   \item Chapter \ref{RelatedWork} presents our literature suvery on event detection, summarisation and user classification on Twitter. 
+   \item Chapter \ref{TheoreticalFramework} describes the main theoretical concepts behind our methodology. If the reader is not familiar with 
+   the basics of text mining and machine learning this chapter is essential to understand the innerworkings of our methodology. 
+   \item  Chapter \ref{DesignAndImplementation} explains how our methodology is designed and implemented and what specific changes we have made to existing methods
+   to deal with the challenges of mining Twitter data. 
+   \item Chapter \ref{Evaluation} illustrates our results, how we evaluated clustering and classification methods and what are the metrics we have used in doing so. This chapter
+   selects the best methods in our arsenal in order to be used in our proof-of-concept application. 
+   \item Lastly, Chapter \ref{Pythia} presents the end-product of our work, a proof-of-concept event exploration system called Pythia. 
+ \end{itemize} 
 %%% ----------------------------------------------------------------------
 
 
