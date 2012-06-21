@@ -70,12 +70,12 @@ F = \frac{2 \times precision \times recall}{precision + recall}
 \subsection{Results}
 For the construction of the ground truth we have manually labelled/categorised 285 tweets according to the events they described. In this dataset we have identified 35 different events. These tweets are collected using our data retrieval module and they are related to the Egypt's uprising. More specifically, these tweets describe the events that took place during a 2-hour period (12pm - 14pm) on 25th of January 2011.    
 
-\subsubsection{Evaluation of clusterers with different number of documents}\label{EvalDiffNoDocs}
+\subsubsection{Clustering quality vs Number of documents in the dataset}\label{EvalDiffNoDocs}
 In this section we investigate the performance of the four different algorithms when the number of documents in our dataset varies while the other variables, the document length and the vocabulary diversity are kept constant. More specifically, we start with a small dataset of 50 documents and we iteratively add more documents (5 each time) until we reach a dataset size of 285. The average document length is $116.44$ characters/document and the vocabulary diversity is $1.07$ words/document. Also, the optimal parameters for the four classifiers are:
 
 \begin{itemize}
   \item \textbf{k-Means:} The number of clusters, $k$, is set to 35 since we expect 35 events to be found. 
-  \item \textbf{DBSCAN:} The two parameters needed for DBSCAN are set to $ε$=0.5 and $min_pts=5$. 
+  \item \textbf{DBSCAN:} The two parameters needed for DBSCAN are set to $ε=0.5$ and $min\_pts=5$. 
   \item \textbf{NMF:} The number of bases is 35 since we expect 35 events (bases).
   \item \textbf{Online:} The window size is set to one third of the dataset size at any iteration. 
 \end{itemize}\vspace{15pt}
@@ -91,10 +91,9 @@ We run three different experiments, each one with a different similarity metric.
 The first important observation is that in all the plots DBSCAN and k-Means clusterers outperform the others in terms of the BCubed F metric. In all three cases k-Means performance is constantly around 0.8 although in the case of Euclidean distance the performance has a slightly negative trend as the number of document increases. On the other hand, DBSCAN initially has very low performance but as the number of documents increases the performance becomes better. A possible explanation is offered in [put reference 4 in pramata] which states that a disadvantage of DBSCAN algorithm is that it cannot cluster datasets well with large differences in density. Initially, the dataset is not very dense since the number of documents is small. However, as the number of document increases the performance increases too. The same scenario is depicted in the cases of cosine and Jaccard similarities. The only difference is that this time the initial performance of DBSCAN is not as low as for the Euclidean case.\\\\
 The performances of the other two clusterers are much lower with the NMF clusterer having the lowest performance. The low performance of the online clusterer is expected since we have sacrificed accuracy for execution time performance by considering a limited window size. We have mentioned before that the term-frequency matrix for an online clusterer is constructed using only the last $N$ documents where $N$ is the window size. Therefore, any documents before this are lost and the TF-IDF weightings in the matrix are not accurate. A possible solution would be to use an approach similar to a moving average where the new TF-IDF weightings are calculated based on all the previous information plus the new information coming into the system.   
 
-\subsubsection{Document length}
-In this experiment our aim is to evaluate our clusterers with different average document lengths in the corpus. We try to emulate the cases when a dataset conatins short documents and when it contains very long documents. Also, we want to find what happens in between. The motivation for this experiment is that Twitter corpora are very short and we hypothesize that short documents yield worse results in terms of clustering quality.\\\\
-We start with our original dataset which is described above and we incrementally add more words in the documents to deliberately increase their lenght. However, we have to keep the other two variables of our experiments constant. The number of documents is constant at 285 documents and in order to keep the vocabulary diversity constant, at $1.07$ words/document, the words that are appended to the documents are words that already belong to the dataset. Therefore, we achieve an increase in the document length without changing the vocabulary diversity. The initial value for the average document length is $116.44$. The clusterers use the same parameters as in Section \ref{EvalDiffNoDocs}.   
-   
+\subsubsection{Clustering quality vs Average document length}
+In this experiment our aim is to evaluate our clusterers with different average document lengths in the corpus. We try to emulate the cases when a dataset conatins short documents and when it contains very long documents. Also, we want to find what happens in between these two cases. The motivation behind this experiment is that Twitter corpora are very short and we hypothesize that short documents yield worse results in terms of clustering quality.\\\\
+We start with our original dataset which is described above and we incrementally add more words in the documents to deliberately increase their lenght. However, we have to keep the other two variables of our experiments constant. The number of documents is constant at 285 documents and in order to keep the vocabulary diversity constant, at $1.07$ words/document, the words that are appended to the documents are words that already belong to the dataset. Therefore, we achieve an increase in the document length without changing the vocabulary diversity. The initial value for the average document length is $116.44$. The clusterers use the same parameters as in Section \ref{EvalDiffNoDocs}. Again we have run three experiments with each one using a different similarity measure.\\\\  
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[height=5in, width=6in]{average_document_length}
@@ -102,19 +101,41 @@ We start with our original dataset which is described above and we incrementally
     \label{DifferentLengthResults}
   \end{center}
 \end{figure}
+The results show that the performance of the classifiers is not greatly affected by the average document document length. Although, our hypothesis was that longer documents will aid the clustering process this turns out to be wrong. In our case the performance remains almost the same and in some cases exactly the same. However, we can clearly see that DBSCAN has the highest BCubed F score except for large document lengths in the Euclidean plot. The next best performing is k-Means and then online and NMF clusterers are once again inferior in performance.    
 
-\subsubsection{Vocabulary diversity}
 
+\subsubsection{Clustering quality vs Vocabulary diversity}
+The final experiment is concerned with vocabularity diversity which is the number of distinct words in a dataset over the number of documents in it. Twitter corpora have a large vocabulary diversity due to the fact that they contain typos, spelling mistakes and abbreviations. In order to fabricate datasets with variable number of vocabulary diversity we employ a dictionaty of the English language. More specifically, we begin with our original dataset and in the next iteration we replace some of the words in the documents by random English words starting from a letter in the alphabet. In the next iteration we replace the words with others from the set of words starting from 2 distinct letters of the alphabet. This process continues, increasing the vocabulary diversity each time until we use all the 26 letters of the English alphabet. Also, notice that we replace some of the words in the original documents in order to keep the average document constant at $116.44$. The number of documents also remains constant at 285 documents. The parameters for the clusterers are the same as in Section \ref{EvalDiffNoDocs}. The results for the three different similarity measures are shown in Figure \ref{DifferentVocabularyResults}.\\\\ 
 \begin{figure}[htbp]
   \begin{center}
     \includegraphics[height=5in, width=6in]{vocabulary}
-    \caption{Each plots depicts the results of the experiment with a different similarity measure.}
+    \caption{Each plots depicts the results obtained using a different similarity metric. In each plot we illustrate the BCubed F metric (y-axis) against the vocabulary diversity (x-axis) of each clusterer.}
     \label{DifferentVocabularyResults}
   \end{center}
 \end{figure}
+A first look at the results reveals that once again DBSCAN and k-Means algorithms have higher BCubed F scores than the other two. The overall trend in the plots indicates that in general as the vocabulary diversity increases the BCubed F score decreases for all clusterers, except from NMF's score which remains almost constant. An increase in vocabulary diversity means that it is harder to compute similarities between the documents since their common features are fewer. However, for the case of the cosine similarity we can see that the performance of DBSCAN and k-Means is immune to higher vocabulary diversities. The reason might be that due to the very diverse vocabulary the term-frequency vectors are very long and sparse since they contain many 0 values. Unlike the Euclidean distance, cosine similarity ignores these 0 values and focuses only on the common words between two documents and thus leads to better results.\\\\
+The lower performance in this experiment stems from the fact that the feature vectors are getting larger due to the vocabulary diversity. Therefore, the dimensionality of the space becomes bigger and bigger and the effects of the "curse of dimensionality" reduce the performance of our clusterers. There are some remedies for this problem and one of them is to reduce the dimensionality by feature selection methods. One of these methods is Principal Component Analysis (PCA) that searches for $k n-dimensional$ orthogonal vectors that can best be used to represent the data, where $n$ is the dimensions of the feature vector and $k < n$[put reference data mining book]. We have used Orange's package for PCA and we have applied this dimensionality reduction methods on our two best clusterers. The results are shown in Figure \ref{DifferentVocabularyPCAResults}.\\\\ 
+\begin{figure}[htbp]
+  \begin{center}
+    \includegraphics[height=5in, width=6in]{vocabulary_pca}
+    \caption{The results for the BCubed F score against the vocabularty diversity after PCA have been used to reduce the dimensionality.}
+    \label{DifferentVocabularyPCAResults}
+  \end{center}
+\end{figure}
+The results are positive since the BCubed F score of k-Means has not only risen but it demonstrates a positive trend in all cases. DBSCAN's score remains the same for the Euclidean and Jaccard cases but it is improved for the case of cosine similarity. The initial score might be lower than the previous case but it never falls below $0.5$. Therefore, PCA can help in this case especially for k-Means.
 
 \subsubsection{Execution time performance}
-Here I will put the results and graphs about the execution time performance of the algorithms
+\begin{center}
+\begin{tabular}{ | l | l| l | l | }
+  \hline
+  \textbf{Clustering method} & \textbf{Euclidean} & \textbf{Cosine} & \textbf{Jaccard} \\ \hline
+  k-Means \begin{tabular}{ | r  }  Number of documents  \\ Document Length \\ Vocabulary Diversity \end{tabular} & 1 & 2 & 3 \\
+  DBSCAN  \begin{tabular}{ | r  }  Number of documents  \\ Document Length \\ Vocabulary Diversity \end{tabular} & 1 & 2 & 3 \\
+  NMF     \begin{tabular}{ | r  }  Number of documents  \\ Document Length \\ Vocabulary Diversity \end{tabular} & 1 & 2 & 3 \\
+  Online  \begin{tabular}{ | r  }  Number of documents  \\ Document Length \\ Vocabulary Diversity \end{tabular} & 1 & 2 & 3 \\
+  \hline
+\end{tabular}
+\end{center}
 
 \section{Twitter user classification evaluation}
 
@@ -138,7 +159,7 @@ where
   \item False Negatives ($FN$): These are the positive tuples that were incorrectly labelled as negatives by our algorithm.
 \end{itemize}\vspace{15pt}
 
-\subsection{Results and discussion}
+\subsection{Results}
 
 In order to carry on our evaluation we have crawled 200 user profiles from Twtrland and labelled them manually according to the five user categories (celebrities, media organisations, journalists, activists and common people). During the process of labelling we made sure that the training dataset was as unambiguous as possible. However, in some cases the choice was not clear especially for the journalists and activists, since these two categories both overlap. A number of journalists usually are known to be activists as well. Finally, in order to produce as accurate results as possible we have used 10-fold cross validation. Cross-validation is the statistical practice of partitioning a sample of data into subsets such that the classifiers accuracy is tested on a single subset, while the other subsets are used for training. Since we have used 10-fold cross validation we split our dataset in subsets of 20 examples and 180 are used for training while the rest are used to test the classifier.\\\\
 Figure \ref{DifferentClassifiersResults} demonstrates the average results of running 10-fold cross validation 100 times. Information gain is used as the statistical measure for selecting tree nodes in ID3 and post-pruning of the trees takes place after training in order to minimise the effects of overfitting. Also, for the k-nearest neighbor algorithm we have used Euclidean distance to measure similarity between examples and $k=10$ (10 nearest neighbors have given the best results in our dataset). 
