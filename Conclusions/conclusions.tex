@@ -8,7 +8,37 @@
 
 \def\baselinestretch{1.66}
 
-Here I put my conclusions ...
+In this chapter we conclude our work by summarising our contributions and achievements in this project. We also comment on the general outcome 
+of the project and based on this analysis we propose some points to be considered in potential future work in this area.\\\\
+The main objective of this project was to investigate the feasibility of automatic event detection based on Twitter data. In order to 
+familiarise ourselves with event detection and summarisation on Twitter we have looked at the state-of-the-art methodologies proposed by other researchers.
+This background research led to the definition of three major problems that we needed to solve in our project. More specifically, these problems were
+event detection, event summarisation and user classification. Event detection is achieved through clustering followed by a filtering process to remove clusters
+unrelated to real world events. The remaining clusters are considered to be events and we move to the solution of the event summarisation problem. An event summary consists 
+of three elements: a list of top tweets describing the event, the top keyowords of the event and the named entities occurring in the event. Two extractive summarisation
+algorithms, centroid-based summarisation and LexRank are used to surface the best tweets in terms of quality, relevance and usefulness. The other two components of the summary are retrieved
+using keyword weighting and named-entity recognition functions. The solution for the user classification problem is provided by machine learning classification techniques, namely decision trees and k-Nearest neighbours.\\\\
+In the project achievements we also add the evaluation of the clustering and classification algorithms. Since the core component of our methodology is clustering we have focused our efforts 
+on evaluating how well our algorithms perform under some circumstances which occur in Twitter datasets. The results of our evaluation helped us select the best algorithms to use
+in our proof-of-concept web application, called Pythia. Pythia provides an easy to use graphical user interface enabling users to retrieve Twitter datasets and explore them. Our data mining 
+toolset is the backbone of Pythia and in conjunction with the data visualisations they provide an easy to use tool for event detection and summarisation.\\\\
+Reflecting back on our work we believe that the results are very promising but at the same time indicate that there is room for improvement. In particular, we believe that the strong points of our methodology are:
+\begin{itemize}
+  \item Using Pythia on a number of differerent datasets we have proved that is indeed possible to sift through the noise in Twitter data and extract events. This claim is supported by the evaluation results which showed that k-Means and DBSCAN with cosine similarity can cluster tweets very accurately.
+  \item Event summaries were successfuly extracted since it was relatively easy for a human to identify the topic of an event by just looking at them. More specifically, the most informative part of the summaries were the top tweets since they conveyed a lot of information and almost always described the cluster's topic accurately. 
+  \item If closer scrutiny of the events in needed our work showed that it is possible to classify users and investigate events pertaining to a specific type of user with relatively high accuracy.
+\end{itemize}\vspace{15pt}
+However, during evaluation and especially during our experience with Pythia we have identified several key problems that can be the subject of future improvements and research. We outline these problems in the next section. 
+
+\section{Future work}
+
+\begin{itemize}
+  \item \textbf{Online clustering:} Eventhough, the performance of the online clusterer in terms of the F metric was not impressive, we believe that future work should focus on improving this algorithm. The main reason is because this algorithm can scale very easily due to its constant complexity. An improved version of the online clustering algorithm will allow us to solve completely the problem of the vast amount of tweets for an event. Additionally, our work so far focused on historical datasets meaning that users can extract events after they have actually happened. However, one might wish to detect events in real-time. This is not possible with the current implementation but a potential improved version of an online clustering algorithm can steer us towards that direction.    
+  \item \textbf{Identifying real world events:} One of the first things that become apparent by using Pythia on real noisy datasets is that some detected events are not in reality real world events. The problem is the module responsible to filter our irrelevant clusters. At the moment some heuristics are used to filter out some clusters but several improvements are possible. One possible refinement is to use an automatic classifier to distinguish between event and non-event clusters. The heuristics that we use in the current implementation can be the attributes of the feature vector. The classifer will be given examples of event and non-event vectors and the classification will be automatic and probably more precise. Additionaly, more research should be conducted regarding the characteristics of real world events on Twitter in order to identify the best features to use in the classification.   
+  \item \textbf{Run time performance:} We have put a lot of effort in optimising our code but there are still several bottlonecks in the implementation. Intensive vector operations such as the Euclidean distance calculation consume a large piece of the execution time and they limit the scalability of our methods. We have used several optimisation techniques and our last resort was Cython which is used to write C extensions for Python and the result is faster code. However, in future work we should investigate how the intrinsic properties of the algorithms can be optimised without the need to resort to programming solutions.     
+  \item \textbf{Make use of the classification module:} We have implemented the user classification module and used it in our popup window for the summary in Pythia. It shows the distribution of different type of users in the event. However, due to time limitations we have not used the classification module for categorising tweets in the dataset according to their author. Unfortunately, this was the main motivation behind the user classification problem. Therefore, it is essential that any future work should utilise this functionality to enable users to scrutinise the dataset more closely. 
+  \item \textbf{Pythia interface:} At the moment Pythia's visualisation toolset consists of the annotated timeline and the summary popup window. It is possible to make the interface more intuitive and informative. In particular, Pythia's timeline shows the overall trend in a particular dataset and shows the events as dots. However, if there are many events it is time-consuming and tedious for the user to click on each individual dot to find out what that event is about. A better approach would be to construct a timeline, similar to Twitter's timeline, that the user can easily scroll up and down.     
+\end{itemize}\vspace{15pt}
 
 %%% ----------------------------------------------------------------------
 

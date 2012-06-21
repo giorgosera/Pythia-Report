@@ -58,6 +58,7 @@
 \definecolor{keywords}{RGB}{255,0,90}
 \lstset{frame=lrb,xleftmargin=\fboxsep,xrightmargin=-\fboxsep, keywordstyle=\color{keywords}, commentstyle=\color{comments}}
 
+
 % Comment out the next line to get single spacing
 \onehalfspacing
 
@@ -75,12 +76,9 @@
 % \end{abstractseparate}
 
 
-
-
 % Using the watermark package which is in StyleFiles/
 % and to remove DRAFT COPY ONLY appearing on the top of all pages comment out below line
 %\watermark{DRAFT COPY ONLY}
-
 
 \maketitle
 
@@ -95,7 +93,6 @@
 \include{Abstract/abstract}
 
 \tableofcontents
-
 \mainmatter % book mode only
 \include{Introduction/introduction}
 \include{Chapter1/chapter1}
@@ -104,11 +101,9 @@
 \include{Chapter4/chapter4}
 \include{Chapter5/chapter5}
 \include{Conclusions/conclusions}
-
 \backmatter % book mode only
 \appendix
 \include{Appendix1/appendix1}
-\include{Appendix2/appendix2}
 
 \bibliographystyle{plainnat}
 %\bibliographystyle{Classes/CUEDbiblio}

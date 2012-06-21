@@ -489,7 +489,7 @@ the AbstractClassifier class factors out the common functionality of classifiers
   \end{center}
 \end{figure} 
 
-\subsubsection{ID3Classifier}
+\subsubsection{ID3 Classifier implementation}
 One of the most popular decision tree learning algorithms is the ID3 and there are a lot of open source implementations. It learns a decision tree by constructing it top-down iteratively and 
 at each iteration it tries to find the best attribute from the feature vector to be tested, i.e. the attribute that helps the most in discriminating the examples. It selects this attribute using
 a statistical test to determine how well it classifies the training examples.\\\\
@@ -504,7 +504,7 @@ We have decided to use Orange's ID3 implementation which can be easily extended 
   \end{center}
 \end{figure} 
 
-\subsubsection{NNClassifier}
+\subsubsection{k-Nearest Neighbours Classifier implementation}
 Another approach for classifying users is the k-Nearest neighbour which is again effective in handling noisy datasets given a relatively large training dataset. Once again we have used the k-Nearest neighbour algorithm implemented with Orange and in Chapter \ref{Evaluation} we compare its performance against the decision tree implementation. The algorithm receives the training data, in the same way as the ID3 algorithm does, and then we can present it with a new example to get its classification. As it is expected a lazy learning algorithm like k-Nearest neighbour takes longer to classify an example but much less time during training since effectively there is no training phase.   
 
 \section{Summary}
